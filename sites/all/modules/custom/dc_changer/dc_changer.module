@@ -3,6 +3,7 @@
  * @file
  * The module allows change task status
  */
+define('DC_CHANGER_STATUS_DONE', 1);
 
 /**
  * Implements hook_menu().
@@ -24,20 +25,24 @@ function dc_changer_menu() {
  return $items;
 }
 
+/**
+ * Remove link 'Completed', Change status to 'Done' and add date of completion
+ */
 function _dc_changer_update($ajax, $nid) {
  $is_ajax = $ajax === 'ajax';
 
  $node = node_load($nid);
- $node->field_status['und'][0]['tid'] = 1;
+ $node->field_status['und'][0]['tid'] = DC_CHANGER_STATUS_DONE;
+ $node->field_date_of_completion['und'][0]['value'] = date('F j, Y, g:i a');
  node_save($node);
 
  if ($is_ajax) {
   $commands = array();
   $commands[] = ajax_command_remove("a[data-nid=$nid]");
+
   return array(
    '#type' => 'ajax',
    '#commands' => $commands,
   );
  }
-
 }
