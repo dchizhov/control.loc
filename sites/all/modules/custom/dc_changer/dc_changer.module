@@ -1,0 +1,43 @@
+<?php
+/**
+ * @file
+ * The module allows change task status
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function dc_changer_menu() {
+ drupal_add_library('system', 'drupal.ajax');
+
+ $items['change-status/nojs/%'] = array(
+  'page callback' => '_dc_changer_update',
+  'page arguments' => array(1, 2),
+  'access arguments' => array('permission name'),
+  'type' => MENU_CALLBACK,
+ );
+
+ $items['change-status/ajax/%'] = array(
+   'delivery callback' => 'ajax_deliver',
+  ) + $items['change-status/nojs/%'];
+
+ return $items;
+}
+
+function _dc_changer_update($ajax, $nid) {
+ $is_ajax = $ajax === 'ajax';
+
+ $node = node_load($nid);
+ $node->field_status['und'][0]['tid'] = 1;
+ node_save($node);
+
+ if ($is_ajax) {
+  $commands = array();
+  $commands[] = ajax_command_remove("a[data-nid=$nid]");
+  return array(
+   '#type' => 'ajax',
+   '#commands' => $commands,
+  );
+ }
+
+}
