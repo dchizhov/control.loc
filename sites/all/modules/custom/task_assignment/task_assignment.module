@@ -29,7 +29,6 @@ function task_assignment_form_assigned_tasks_node_form_alter(&$form, &$form_stat
 
   // "field_nid_task" field overriding.
   $form['field_nid_task'][LANGUAGE_NONE]['#options'] = $tasks;
-  $form['field_nid_task'][LANGUAGE_NONE]['#weight'] = '2';
   $form['field_nid_task'][LANGUAGE_NONE]['#prefix'] = '<div id="tasks-list">';
   $form['field_nid_task'][LANGUAGE_NONE]['#suffix'] = '</div>';
 }

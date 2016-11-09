@@ -4,6 +4,9 @@
  * The module allows change task status
  */
 
+// Sets a status DONE to assigned task.
+define('DC_CHANGER_TASK_STATUS_DONE', '1');
+
 /**
  * Implements hook_menu().
  */
@@ -31,10 +34,10 @@ function _dc_changer_update($ajax, $nid) {
  $is_ajax = $ajax === 'ajax';
 
  $node = node_load($nid);
- $node->field_status['und'][0]['tid'] = 1;
+ $node->field_status['und'][0]['tid'] = DC_CHANGER_TASK_STATUS_DONE;
  node_save($node);
 
-$target_status = taxonomy_term_load(1);
+ $target_status = taxonomy_term_load(DC_CHANGER_TASK_STATUS_DONE);
 
  if ($is_ajax) {
   $commands = array();
