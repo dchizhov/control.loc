@@ -1,0 +1,8 @@
+name = Feature CT Employee
+description = Provides site with all nodes of 'Employees' content type
+core = 7.x
+package = Features CT
+version = 7.x-1.0
+dependencies[] = features
+features[features_api][] = api:2
+features[node][] = employees

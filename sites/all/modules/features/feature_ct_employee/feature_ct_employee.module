@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Feature CT Employee feature.
+ */
+
+include_once 'feature_ct_employee.features.inc';

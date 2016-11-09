@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Feature CT Assigned Task feature.
+ */
+
+include_once 'feature_ct_assigned_task.features.inc';

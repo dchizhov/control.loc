@@ -24,6 +24,9 @@ function dc_changer_menu() {
  return $items;
 }
 
+/**
+ * Function creates and returns ajax_commands to change status for assigned tasks.
+ */
 function _dc_changer_update($ajax, $nid) {
  $is_ajax = $ajax === 'ajax';
 
@@ -31,9 +34,12 @@ function _dc_changer_update($ajax, $nid) {
  $node->field_status['und'][0]['tid'] = 1;
  node_save($node);
 
+$target_status = taxonomy_term_load(1);
+
  if ($is_ajax) {
   $commands = array();
-  $commands[] = ajax_command_remove("a[data-nid=$nid]");
+  $commands[] = ajax_command_remove(".control-actions-link[data-nid=$nid]");
+  $commands[] = ajax_command_html(".assigned-task-status[data-nid=$nid]", $target_status->name);
   return array(
    '#type' => 'ajax',
    '#commands' => $commands,
