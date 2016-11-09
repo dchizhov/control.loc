@@ -249,9 +249,9 @@ $databases = array (
   array (
     'default' => 
     array (
-      'database' => 'control.loc_db',
-      'username' => 'root',
-      'password' => '12345',
+      'database' => 'semchuk_control.loc',
+      'username' => 'semchuk',
+      'password' => 'pass',
       'host' => 'localhost',
       'port' => '',
       'driver' => 'mysql',

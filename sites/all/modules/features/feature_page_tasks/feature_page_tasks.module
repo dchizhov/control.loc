@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Feature Page Tasks feature.
+ */
+
+include_once 'feature_page_tasks.features.inc';
