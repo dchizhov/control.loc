@@ -1,4 +1,4 @@
 core = 7.x
 name = "Task Assignment module"
 description = "Module creates a nodes to assign 'tasks' to 'employees'."
-package = Tasks
+package = Custom
