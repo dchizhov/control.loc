@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Task_assignment module: creates a nodes to assign 'tasks' to 'employees'.
+ * Dc_task_assignment module: creates a nodes to assign 'tasks' to 'employees'.
  *
  * Creates 'assigned_tasks' to assign 'tasks' to 'employees'.
  */
@@ -10,11 +10,11 @@
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function task_assignment_form_assigned_tasks_node_form_alter(&$form, &$form_state) {
+function dc_task_assignment_form_assigned_tasks_node_form_alter(&$form, &$form_state) {
 
   // "field_nid_employee" field overriding.
   $form['field_nid_employee'][LANGUAGE_NONE]['#ajax'] = array(
-    'callback' => 'task_assignment_tasks_list_callback',
+    'callback' => 'dc_task_assignment_tasks_list_callback',
     'wrapper' => 'tasks-list',
   );
 
@@ -25,7 +25,7 @@ function task_assignment_form_assigned_tasks_node_form_alter(&$form, &$form_stat
   // Creating an empty array.
   $tasks = array();
   // Filling $tasks array by "tasks" nodes.
-  $tasks = task_assignment_get_tasks($selected_employee);
+  $tasks = dc_task_assignment_get_tasks($selected_employee);
 
   // "field_nid_task" field overriding.
   $form['field_nid_task'][LANGUAGE_NONE]['#options'] = $tasks;
@@ -36,7 +36,7 @@ function task_assignment_form_assigned_tasks_node_form_alter(&$form, &$form_stat
 /**
  * Function returns a list of tasks that employee didn't do before.
  */
-function task_assignment_get_tasks($employee_nid) {
+function dc_task_assignment_get_tasks($employee_nid) {
 
   $options = array();
 
@@ -75,6 +75,6 @@ function task_assignment_get_tasks($employee_nid) {
 /**
  * Callback function. Selects tasks list to be returned for re-rendering.
  */
-function task_assignment_tasks_list_callback($form, $form_state) {
+function dc_task_assignment_tasks_list_callback($form, $form_state) {
   return $form['field_nid_task'];
 }
