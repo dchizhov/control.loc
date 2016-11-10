@@ -1,0 +1,9 @@
+name = Feature M Main Menu
+description = Provides a site with new main menu links.
+core = 7.x
+package = Features Menu
+version = 7.x-1.0
+dependencies[] = features
+dependencies[] = menu
+features[features_api][] = api:2
+features[menu_custom][] = main-menu

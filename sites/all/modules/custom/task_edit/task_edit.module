@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Task_edit module: edits a task editing form.
+ *
+ * Edits a task editing form.
+ * Creates a new 'task_number' variable to store a task number.
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function task_edit_form_tasks_node_form_alter(&$form, &$form_state) {
+  // Check whether there is a persistent 'task_number' variable.
+  !empty(variable_get('task_number')) ? variable_get('task_number') : variable_set('task_number', '1');
+  // Get a value of a persistent 'task_number' variable.
+  $task_number = variable_get('task_number');
+  // Filling of a title field.
+  $form['title']['#default_value'] = 'Задание ' . $task_number;
+}
+
+/**
+ * Implements hook_node_insert($node).
+ */
+function task_edit_node_insert($node) {
+  // Get a value of a persistent 'task_number' variable.
+  $task_number = variable_get('task_number');
+  // Increasing a value of a persistent 'task_number' variable.
+  $new_task_number = intval($task_number + 1);
+  // Setting a new value to a persistent 'task_number' variable.
+  variable_set('task_number', $new_task_number);
+}
