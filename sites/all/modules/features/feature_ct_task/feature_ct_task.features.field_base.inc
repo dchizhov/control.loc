@@ -53,7 +53,7 @@ function feature_ct_task_field_default_field_bases() {
   // Exported field_base: 'field_task_tags'.
   $field_bases['field_task_tags'] = array(
     'active' => 1,
-    'cardinality' => 1,
+    'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_task_tags',
