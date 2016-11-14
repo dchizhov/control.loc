@@ -1,0 +1,9 @@
+name = Feature T Task Topic
+description = Provides a site with Task topic taxonomy
+core = 7.x
+package = Features Taxonomy
+version = 7.x-1.0
+dependencies[] = features
+dependencies[] = taxonomy
+features[features_api][] = api:2
+features[taxonomy][] = task_topic
