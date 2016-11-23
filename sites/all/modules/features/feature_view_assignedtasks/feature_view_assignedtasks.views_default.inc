@@ -168,6 +168,11 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['footer'] = FALSE;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Entity Reference: Referenced Entity */
+  $handler->display->display_options['relationships']['field_nid_task_target_id']['id'] = 'field_nid_task_target_id';
+  $handler->display->display_options['relationships']['field_nid_task_target_id']['table'] = 'field_data_field_nid_task';
+  $handler->display->display_options['relationships']['field_nid_task_target_id']['field'] = 'field_nid_task_target_id';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Employee */
   $handler->display->display_options['fields']['field_nid_employee']['id'] = 'field_nid_employee';
@@ -185,6 +190,12 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['fields']['field_nid_task']['settings'] = array(
     'link' => 1,
   );
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['relationship'] = 'field_nid_task_target_id';
+  $handler->display->display_options['fields']['body']['label'] = 'Task description';
   /* Field: Content: Post date */
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'node';
@@ -269,6 +280,11 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Entity Reference: Referenced Entity */
+  $handler->display->display_options['relationships']['field_nid_task_target_id']['id'] = 'field_nid_task_target_id';
+  $handler->display->display_options['relationships']['field_nid_task_target_id']['table'] = 'field_data_field_nid_task';
+  $handler->display->display_options['relationships']['field_nid_task_target_id']['field'] = 'field_nid_task_target_id';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Task */
   $handler->display->display_options['fields']['field_nid_task']['id'] = 'field_nid_task';
@@ -278,6 +294,11 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['fields']['field_nid_task']['settings'] = array(
     'link' => 0,
   );
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['relationship'] = 'field_nid_task_target_id';
   /* Field: Content: Post date */
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'node';
@@ -347,6 +368,11 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Entity Reference: Referenced Entity */
+  $handler->display->display_options['relationships']['field_nid_task_target_id']['id'] = 'field_nid_task_target_id';
+  $handler->display->display_options['relationships']['field_nid_task_target_id']['table'] = 'field_data_field_nid_task';
+  $handler->display->display_options['relationships']['field_nid_task_target_id']['field'] = 'field_nid_task_target_id';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Task */
   $handler->display->display_options['fields']['field_nid_task']['id'] = 'field_nid_task';
@@ -354,8 +380,13 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['fields']['field_nid_task']['field'] = 'field_nid_task';
   $handler->display->display_options['fields']['field_nid_task']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_nid_task']['settings'] = array(
-    'link' => 0,
+    'link' => 1,
   );
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['relationship'] = 'field_nid_task_target_id';
   /* Field: Content: Date of completion */
   $handler->display->display_options['fields']['field_date_of_completion']['id'] = 'field_date_of_completion';
   $handler->display->display_options['fields']['field_date_of_completion']['table'] = 'field_data_field_date_of_completion';
@@ -419,7 +450,7 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['fields']['field_nid_employee']['field'] = 'field_nid_employee';
   $handler->display->display_options['fields']['field_nid_employee']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_nid_employee']['settings'] = array(
-    'link' => 0,
+    'link' => 1,
   );
   /* Field: Content: Date of completion */
   $handler->display->display_options['fields']['field_date_of_completion']['id'] = 'field_date_of_completion';
@@ -586,6 +617,11 @@ function feature_view_assignedtasks_views_default_views() {
 
   /* Display: Assigned tasks block */
   $handler = $view->new_display('block', 'Assigned tasks block', 'assigned_tasks_block');
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Entity Reference: Referenced Entity */
+  $handler->display->display_options['relationships']['field_nid_task_target_id']['id'] = 'field_nid_task_target_id';
+  $handler->display->display_options['relationships']['field_nid_task_target_id']['table'] = 'field_data_field_nid_task';
+  $handler->display->display_options['relationships']['field_nid_task_target_id']['field'] = 'field_nid_task_target_id';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Employee */
   $handler->display->display_options['fields']['field_nid_employee']['id'] = 'field_nid_employee';
@@ -603,6 +639,12 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['fields']['field_nid_task']['settings'] = array(
     'link' => 1,
   );
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['relationship'] = 'field_nid_task_target_id';
+  $handler->display->display_options['fields']['body']['label'] = 'Task description';
   /* Field: Content: Post date */
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'node';

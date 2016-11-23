@@ -50,7 +50,7 @@ function feature_ct_task_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 31,
+      'weight' => 2,
     ),
   );
 
@@ -89,7 +89,7 @@ function feature_ct_task_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 32,
+      'weight' => 5,
     ),
   );
 
@@ -137,7 +137,7 @@ function feature_ct_task_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 34,
+      'weight' => 4,
     ),
   );
 
@@ -181,7 +181,7 @@ function feature_ct_task_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 33,
+      'weight' => 3,
     ),
   );
 

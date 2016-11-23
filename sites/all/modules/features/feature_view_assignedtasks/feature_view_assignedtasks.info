@@ -1,8 +1,8 @@
 name = Feature View Assignedtasks
-description = Provides a site with a view called "assignedtasks" 
+description = Provides a site with a view called "assignedtasks"
 core = 7.x
 package = Features View
-version = 7.x-1.0
+version = 7.x-1.02
 dependencies[] = views
 dependencies[] = views_data_export
 features[ctools][] = views:views_default:3.0
