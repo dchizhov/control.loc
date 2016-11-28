@@ -22,6 +22,7 @@ function ai_employees_list_get_list() {
     $employees_list[$employee_node->title]['done'] = $done;
     $employees_list[$employee_node->title]['in_progress'] = $in_progress;
     $employees_list[$employee_node->title]['all'] = $all_tasks;
+    $employees_list[$employee_node->title]['percentage'] = number_format($done * 100 / $all_tasks);
   }
 
   return $employees_list;
@@ -67,6 +68,7 @@ function ai_employees_list_prepare_list($lists) {
     'In Progress',
     'Done',
     'Total',
+    'Employee\'s progress',
   );
   $rows = array();
   foreach ($lists as $employee => $list) {
@@ -76,6 +78,7 @@ function ai_employees_list_prepare_list($lists) {
         check_plain($list['in_progress']),
         check_plain($list['done']),
         check_plain($list['all']),
+        theme('cool_progressbar', array('percentage' => check_plain($list['percentage']))),
       ),
     );
   }

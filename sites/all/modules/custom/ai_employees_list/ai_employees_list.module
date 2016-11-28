@@ -34,3 +34,17 @@ function ai_employees_list_block_view($delta = '') {
   }
   return $block;
 }
+
+/**
+ * Implements hook_theme().
+ */
+function ai_employees_list_theme() {
+  return array(
+    'cool_progressbar' => array(
+      'variables' => array(
+        'percentage' => NULL,
+      ),
+      'template' => 'templates/cool_progressbar',
+    ),
+  );
+}
