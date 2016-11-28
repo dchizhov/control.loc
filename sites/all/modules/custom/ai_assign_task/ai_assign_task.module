@@ -1,0 +1,22 @@
+<?php
+/**
+ * @file
+ * Module for opening assign task form in popup.
+ */
+
+require_once 'includes/ai_assign_task.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function ai_assign_task_menu() {
+  $items['all_tasks/%ctools_js/%nid'] = array(
+    'title' => 'Assign task',
+    'page arguments' => array(1, 2),
+    'access callback' => TRUE,
+    'page callback' => 'ai_assign_task_callback',
+    'delivery callback' => 'ajax_deliver',
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}

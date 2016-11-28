@@ -1,0 +1,6 @@
+name = "Assign task popup"
+description = "Module for opening assign task form in popup"
+core = 7.x
+package = Custom
+
+dependencies[] = ctools
