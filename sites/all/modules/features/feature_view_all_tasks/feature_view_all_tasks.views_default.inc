@@ -23,6 +23,7 @@ function feature_view_all_tasks_views_default_views() {
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'all tasks';
+  $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -37,6 +38,7 @@ function feature_view_all_tasks_views_default_views() {
     'field_task_topic' => 'field_task_topic',
     'field_task_tags' => 'field_task_tags',
     'edit_node' => 'edit_node',
+    'nothing' => 'nothing',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
@@ -71,7 +73,13 @@ function feature_view_all_tasks_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
+    'nothing' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
   );
+  $handler->display->display_options['style_options']['sticky'] = TRUE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -134,6 +142,20 @@ function feature_view_all_tasks_views_default_views() {
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['label'] = '';
+  $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<a href="/all_tasks/nojs/[nid]" class="ctools-use-modal ctools-modal-assign-popup-style use-ajax">assign</a>';
+  $handler->display->display_options['fields']['nothing']['alter']['path'] = '/all_tasks/nojs?nid=[node:nid]';
+  $handler->display->display_options['fields']['nothing']['element_wrapper_class'] = 'ctools-use-modal';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */

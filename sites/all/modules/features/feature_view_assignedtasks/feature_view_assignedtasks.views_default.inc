@@ -442,7 +442,7 @@ function feature_view_assignedtasks_views_default_views() {
   /* Display: Employees who performed task */
   $handler = $view->new_display('block', 'Employees who performed task', 'block_3');
   $handler->display->display_options['defaults']['title'] = FALSE;
-  $handler->display->display_options['title'] = 'Who permormed';
+  $handler->display->display_options['title'] = 'Who performed';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Employee */
   $handler->display->display_options['fields']['field_nid_employee']['id'] = 'field_nid_employee';
@@ -523,7 +523,7 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['fields']['created']['field'] = 'created';
   $handler->display->display_options['fields']['created']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['created']['date_format'] = 'time ago';
-  $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  $handler->display->display_options['fields']['created']['second_date_format'] = 'medium';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Task (field_nid_task) */
   $handler->display->display_options['arguments']['field_nid_task_target_id']['id'] = 'field_nid_task_target_id';
