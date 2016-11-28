@@ -22,7 +22,8 @@ function ai_employees_list_get_list() {
     $employees_list[$employee_node->title]['done'] = $done;
     $employees_list[$employee_node->title]['in_progress'] = $in_progress;
     $employees_list[$employee_node->title]['all'] = $all_tasks;
-    $employees_list[$employee_node->title]['percentage'] = number_format($done * 100 / $all_tasks);
+    $employees_list[$employee_node->title]['percentage'] = !empty($all_tasks)
+      ? number_format($done * 100 / $all_tasks) : 0;
   }
 
   return $employees_list;
