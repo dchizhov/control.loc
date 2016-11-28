@@ -1,0 +1,11 @@
+name = Feature Rules Tasks
+description = Provides all rules config for tasks
+core = 7.x
+package = Features Rules
+version = 7.x-1.0
+dependencies[] = entity
+dependencies[] = rules
+features[features_api][] = api:2
+features[rules_config][] = rules_assigned_task
+features[rules_config][] = rules_task_completion
+features[rules_config][] = rules_task_created
