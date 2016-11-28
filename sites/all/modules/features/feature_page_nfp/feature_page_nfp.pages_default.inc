@@ -94,6 +94,29 @@ function feature_page_nfp_default_page_manager_pages() {
   $pane->uuid = '321758df-4723-4989-90cf-18b0d4d02aab';
   $display->content['new-321758df-4723-4989-90cf-18b0d4d02aab'] = $pane;
   $display->panels['middle'][0] = 'new-321758df-4723-4989-90cf-18b0d4d02aab';
+  $pane = new stdClass();
+  $pane->pid = 'new-1ebdb530-c45c-42ed-ac39-8d573e5b5e76';
+  $pane->panel = 'middle';
+  $pane->type = 'block';
+  $pane->subtype = 'ai_employees_list-employee_list';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array(
+    'override_title' => 0,
+    'override_title_text' => '',
+    'override_title_heading' => 'h2',
+  );
+  $pane->cache = array();
+  $pane->style = array(
+    'settings' => NULL,
+  );
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 1;
+  $pane->locks = array();
+  $pane->uuid = '1ebdb530-c45c-42ed-ac39-8d573e5b5e76';
+  $display->content['new-1ebdb530-c45c-42ed-ac39-8d573e5b5e76'] = $pane;
+  $display->panels['middle'][1] = 'new-1ebdb530-c45c-42ed-ac39-8d573e5b5e76';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-321758df-4723-4989-90cf-18b0d4d02aab';
   $handler->conf['display'] = $display;

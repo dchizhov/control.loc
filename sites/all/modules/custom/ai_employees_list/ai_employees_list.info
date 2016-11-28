@@ -1,3 +1,4 @@
 name = "Employees list"
 description = "Module for listing existing employees and their task statistics"
 core = 7.x
+package = Custom
