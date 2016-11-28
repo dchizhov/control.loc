@@ -6,6 +6,7 @@
 
 // Sets a status DONE to assigned task.
 define('DC_CHANGER_TASK_STATUS_DONE', '1');
+define('DC_CHANGER_TASK_STATUS_IN_PROGRESS', '2');
 
 /**
  * Implements hook_menu().

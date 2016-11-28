@@ -4,8 +4,6 @@
  * Module for listing existing employees and their task statistics.
  */
 
-define('AI_EMPLOYEES_LIST_STATUS_DONE', 1);
-define('AI_EMPLOYEES_LIST_STATUS_IN_PROGRESS', 2);
 require_once 'includes/ai_employees_list.inc';
 
 /**
