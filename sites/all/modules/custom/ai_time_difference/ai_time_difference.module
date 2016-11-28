@@ -1,0 +1,51 @@
+<?php
+/**
+ * @file
+ * Module counts time difference between starting and completing assigned
+ * task and creates token with it.
+ */
+
+/**
+ * Implements hook token info().
+ */
+function ai_time_difference_token_info() {
+  $info['types']['time_tokens'] = array(
+    'name' => t('Time tokens'),
+    'description' => t('Tokens to output time'),
+  );
+  $info['tokens']['time_tokens']['time_difference'] = array(
+    'name' => t('Time difference token'),
+    'description' => t('Token that outputs time difference'),
+  );
+  return $info;
+}
+
+/**
+ * Implements hook tokens().
+ */
+function ai_time_difference_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+  $timedifference = ai_time_difference_get_difference();
+  if ($type == 'time_tokens') {
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'time_difference':
+          $replacements[$original] = $timedifference;
+          break;
+      }
+    }
+  }
+
+  return $replacements;
+}
+
+function ai_time_difference_get_difference() {
+  $nid = arg(2);
+  $node = node_load($nid);
+  if ($node) {
+    $start = new DateTime(date('Y-m-d H:i', $node->created));
+    $end = new DateTime('now');
+    $difference = $end->diff($start);
+    return $difference->format('%D:%H:%I:%S');
+  }
+}
