@@ -1,0 +1,36 @@
+<?php
+/**
+ * @file
+ * Module for listing existing employees and their task statistics.
+ */
+
+require_once 'includes/ai_employees_list.inc';
+
+/**
+ * Implements hook_block_info().
+ */
+function ai_employees_list_block_info() {
+  $blocks = array();
+
+  $blocks['employee_list'] = array(
+    'info' => t('Show employees list with task statistics'),
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function ai_employees_list_block_view($delta = '') {
+  $block = array();
+
+  $employees_list = ai_employees_list_get_list();
+
+  switch ($delta) {
+    case 'employee_list':
+      $block['subject'] = 'Employees list';
+      $block['content'] = theme('table', ai_employees_list_prepare_list($employees_list));
+      break;
+  }
+  return $block;
+}
