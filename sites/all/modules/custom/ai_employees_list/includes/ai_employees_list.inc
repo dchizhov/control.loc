@@ -27,11 +27,13 @@ function ai_employees_list_get_list() {
       'percentage' => !empty($all_tasks) ? number_format($done * 100 / $all_tasks) : 0,
     );
   }
-  $tmp = array();
-  foreach ($employees_list as &$list) {
-    $tmp[] = &$list['done'];
+
+  $default_sort_criterion = array();
+  foreach ($employees_list as $list) {
+    $default_sort_criterion[] = $list['done'];
   }
-  array_multisort($tmp, SORT_DESC, $employees_list);
+  array_multisort($default_sort_criterion, SORT_DESC, $employees_list);
+
   return $employees_list;
 }
 
@@ -77,7 +79,6 @@ function ai_employees_list_prepare_list($lists) {
     'Total',
     'Employee\'s progress',
   );
-
   $rows = array();
   foreach ($lists as $list) {
     $rows[] = array(
