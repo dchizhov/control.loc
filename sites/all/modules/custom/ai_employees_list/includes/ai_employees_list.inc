@@ -19,12 +19,20 @@ function ai_employees_list_get_list() {
     $in_progress = ai_employees_list_get_tasks_quantity($employee_node->nid,
       DC_CHANGER_TASK_STATUS_IN_PROGRESS);
 
-    $employees_list[$employee_node->title]['done'] = $done;
-    $employees_list[$employee_node->title]['in_progress'] = $in_progress;
-    $employees_list[$employee_node->title]['all'] = $all_tasks;
-    $employees_list[$employee_node->title]['percentage'] = !empty($all_tasks)
-      ? number_format($done * 100 / $all_tasks) : 0;
+    $employees_list[] = array(
+      'name' => l(check_plain($employee_node->title), 'node/' . $employee_node->nid, array()),
+      'done' => $done,
+      'in_progress' => $in_progress,
+      'all' => $all_tasks,
+      'percentage' => !empty($all_tasks) ? number_format($done * 100 / $all_tasks) : 0,
+    );
   }
+
+  $default_sort_criterion = array();
+  foreach ($employees_list as $list) {
+    $default_sort_criterion[] = $list['done'];
+  }
+  array_multisort($default_sort_criterion, SORT_DESC, $employees_list);
 
   return $employees_list;
 }
@@ -72,10 +80,10 @@ function ai_employees_list_prepare_list($lists) {
     'Employee\'s progress',
   );
   $rows = array();
-  foreach ($lists as $employee => $list) {
+  foreach ($lists as $list) {
     $rows[] = array(
       'data' => array(
-        check_plain($employee),
+        $list['name'],
         check_plain($list['in_progress']),
         check_plain($list['done']),
         check_plain($list['all']),

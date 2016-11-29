@@ -346,8 +346,8 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['filters']['tid']['vocabulary'] = 'statuses';
   $handler->display->display_options['block_description'] = 'Tasks in process ';
 
-  /* Display: Tasks is done */
-  $handler = $view->new_display('block', 'Tasks is done', 'block_2');
+  /* Display: Tasks are done */
+  $handler = $view->new_display('block', 'Tasks are done', 'block_2');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Tasks is done';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
