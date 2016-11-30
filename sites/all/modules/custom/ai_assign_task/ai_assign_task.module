@@ -5,12 +5,13 @@
  */
 
 require_once 'includes/ai_assign_task.inc';
+require_once DRUPAL_ROOT . "/modules/node/node.pages.inc";
 
 /**
  * Implements hook_menu().
  */
 function ai_assign_task_menu() {
-  $items['all_tasks/%ctools_js/%nid'] = array(
+  $items['all_tasks/%ctools_js/%'] = array(
     'title' => 'Assign task',
     'page arguments' => array(1, 2),
     'access callback' => TRUE,
@@ -19,4 +20,27 @@ function ai_assign_task_menu() {
     'type' => MENU_CALLBACK,
   );
   return $items;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function ai_assign_task_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == "assigned_tasks_node_form") {
+    if (is_numeric(arg(2))) {
+      $task_id = arg(2);
+      $form['field_nid_task'][LANGUAGE_NONE]['#default_value'] = $task_id;
+      $form['field_nid_employee'][LANGUAGE_NONE]['#ajax'] = FALSE;
+      $form['field_nid_task'][LANGUAGE_NONE]['#ajax'] = array(
+        'callback' => 'ai_assign_task_employees_list_callback',
+        'wrapper' => 'employee-list',
+      );
+
+      $employees = ai_assign_task_get_employees($task_id);
+
+      $form['field_nid_employee'][LANGUAGE_NONE]['#options'] = $employees;
+      $form['field_nid_employee'][LANGUAGE_NONE]['#prefix'] = '<div id="employee-list">';
+      $form['field_nid_employee'][LANGUAGE_NONE]['#suffix'] = '</div>';
+    }
+  }
 }
