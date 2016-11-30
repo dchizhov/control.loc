@@ -18,6 +18,7 @@ function ai_assign_task_callback($js = NULL) {
   $assigned_task->uid = $user->uid;
   $assigned_task->name = $user->name;
   $assigned_task->type = $type;
+  $assigned_task->language = LANGUAGE_NONE;
   $assigned_task->field_nid_task[LANGUAGE_NONE][0]['value'] = arg(2);
   if (!$js) {
     return drupal_get_form($type . '_node_form', $assigned_task);
@@ -27,11 +28,11 @@ function ai_assign_task_callback($js = NULL) {
     'ajax' => TRUE,
   );
   $form_state['build_info']['args'] = array($assigned_task);
+  $form_state['build_info']['args']['short'] = array(TRUE);
   $output = ctools_modal_form_wrapper($type . '_node_form', $form_state);
   if (!empty($form_state['executed'])) {
     $output = array();
     $output[] = ctools_modal_command_dismiss();
-    $output[] = ctools_ajax_command_redirect('/');
   }
   print ajax_render($output);
   drupal_exit();
