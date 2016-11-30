@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Feature View All Tasks Facet feature.
+ */
+
+include_once 'feature_view_all_tasks_facet.features.inc';
