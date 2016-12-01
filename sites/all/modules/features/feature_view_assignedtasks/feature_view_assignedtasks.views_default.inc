@@ -605,13 +605,13 @@ function feature_view_assignedtasks_views_default_views() {
   );
   $handler->display->display_options['path'] = 'alltasks-exprot';
   $handler->display->display_options['displays'] = array(
-    'page' => 'page',
     'default' => 0,
+    'page' => 0,
     'block_1' => 0,
     'block_2' => 0,
     'block_3' => 0,
     'block_4' => 0,
-    'page_1' => 0,
+    'assigned_tasks_block' => 0,
   );
   $handler->display->display_options['sitename_title'] = 0;
 
@@ -753,13 +753,13 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['fields']['field_status']['type'] = 'taxonomy_term_reference_plain';
   $handler->display->display_options['path'] = 'assigned-tasks-doc';
   $handler->display->display_options['displays'] = array(
-    'assigned_tasks_block' => 'assigned_tasks_block',
     'default' => 0,
     'page' => 0,
     'block_1' => 0,
     'block_2' => 0,
     'block_3' => 0,
     'block_4' => 0,
+    'assigned_tasks_block' => 0,
   );
   $handler->display->display_options['sitename_title'] = 0;
   $export['pagetask'] = $view;
