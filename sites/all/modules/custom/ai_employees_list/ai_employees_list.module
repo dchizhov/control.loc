@@ -15,6 +15,9 @@ function ai_employees_list_block_info() {
   $blocks['employee_list'] = array(
     'info' => t('Show employees list with task statistics'),
   );
+  $blocks['tasks_list_download'] = array(
+    'info' => t('Provides link to download all tasks in doc format'),
+  );
   return $blocks;
 }
 
@@ -30,6 +33,11 @@ function ai_employees_list_block_view($delta = '') {
     case 'employee_list':
       $block['subject'] = 'Employees list';
       $block['content'] = theme('table', ai_employees_list_prepare_list($employees_list));
+      break;
+
+    case 'tasks_list_download':
+      $block['subject'] = 'Download tasks list';
+      $block['content'] = l(t('Download tasks list in doc format'), 'doc-file-download/');
       break;
   }
   return $block;
