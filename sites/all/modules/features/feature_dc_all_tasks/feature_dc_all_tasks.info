@@ -1,0 +1,8 @@
+name = Feature DC All tasks
+core = 7.x
+package = Features
+version = 7.x-1.0
+dependencies[] = feature_page_all_tasks
+dependencies[] = feature_view_all_tasks
+dependencies[] = feature_view_all_tasks_facet
+features[features_api][] = api:2

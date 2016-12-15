@@ -1,0 +1,25 @@
+Index: sites/all/modules/contrib/views_data_export/theme/views_data_export.theme.inc
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- sites/all/modules/contrib/views_data_export/theme/views_data_export.theme.inc	(revision 5a228c012a5c8da8189d9f05405006327a46d877)
++++ sites/all/modules/contrib/views_data_export/theme/views_data_export.theme.inc	(revision )
+@@ -367,7 +367,7 @@
+ 
+   // Need to do a little work to construct the table header, see theme_table().
+   $vars['header_row'] = '';
+-  $vars['header_row'] .= '<thead><tr>';
++  $vars['header_row'] .= '';
+ 
+   $ts = tablesort_init($vars['header']);
+ 
+@@ -376,7 +376,7 @@
+     $vars['header_row'] .= _theme_table_cell($cell, TRUE);
+   }
+ 
+-  $vars['header_row'] .= '</tr></thead>';
++  $vars['header_row'] .= '';
+ 
+   $vars['header_row'] = preg_replace('/<\/?(a|span) ?.*?>/', '', $vars['header_row']); // strip 'a' and 'span' tags
+ }

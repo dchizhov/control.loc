@@ -367,7 +367,7 @@ function template_preprocess_views_data_export_msoffice_header(&$vars) {
 
   // Need to do a little work to construct the table header, see theme_table().
   $vars['header_row'] = '';
-  $vars['header_row'] .= '<thead><tr>';
+  $vars['header_row'] .= '';
 
   $ts = tablesort_init($vars['header']);
 
@@ -376,7 +376,7 @@ function template_preprocess_views_data_export_msoffice_header(&$vars) {
     $vars['header_row'] .= _theme_table_cell($cell, TRUE);
   }
 
-  $vars['header_row'] .= '</tr></thead>';
+  $vars['header_row'] .= '';
 
   $vars['header_row'] = preg_replace('/<\/?(a|span) ?.*?>/', '', $vars['header_row']); // strip 'a' and 'span' tags
 }
