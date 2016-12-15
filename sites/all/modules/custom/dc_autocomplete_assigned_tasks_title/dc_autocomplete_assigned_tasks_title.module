@@ -1,0 +1,56 @@
+<?php
+/**
+ * @file
+ * Auto complete assigned tasks title
+ */
+
+/**
+ * Implements hook_form_alter().
+ */
+function dc_autocomplete_assigned_tasks_title_form_alter(&$form, &$form_state, $form_id) {
+ if ($form_id == 'assigned_tasks_node_form') {
+  drupal_add_js(drupal_get_path('module', 'dc_autocomplete_assigned_tasks_title') . '/dc_autocomplete_assigned_tasks_title.js');
+
+  $form['field_nid_task'] = array(
+   '#type' => 'select',
+   '#title' => 'Tasks:',
+   '#options' => _dc_autocomplete_assigned_tasks_title_get_tasks(),
+   '#ajax' => array(
+    'callback' => '_dc_autocomplete_assigned_tasks_title_set_value',
+    'wrapper' => 'title',
+   ),
+  );
+
+  $form['field_nid_task']['#attributes']['class'][] = 'field_nid_task';
+  $form['title']['#attributes']['class'][] = 'title';
+
+  return $form;
+ }
+}
+
+/**
+ * Get tasks for select field 'field_nid_task';
+ */
+function _dc_autocomplete_assigned_tasks_title_get_tasks() {
+ $tasksDB = db_select('node', 'n')
+  ->fields('n', array('nid', 'title'))
+  ->condition('n.type', 'tasks')
+  ->execute()
+  ->fetchAll();
+
+ $tasks = array();
+ foreach ($tasksDB as $value) {
+  $tasks[$value->nid] = $value->title;
+ }
+
+ return $tasks;
+}
+
+/**
+ * Callback function that setting value to field 'title' through ajax
+ */
+function _dc_autocomplete_assigned_tasks_title_set_value($form, &$form_state) {
+ $commands = array();
+ $commands[] = array('command' => 'dc_autocomplete_assigned_tasks_title_change_title');
+ return array('#type' => 'ajax', '#commands' => $commands);
+}

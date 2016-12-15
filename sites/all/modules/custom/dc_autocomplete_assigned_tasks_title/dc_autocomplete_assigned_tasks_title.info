@@ -1,0 +1,5 @@
+name = Auto complete assigned tasks title
+description = Auto complete assigned tasks title
+core = 7.x
+
+package = Custom
