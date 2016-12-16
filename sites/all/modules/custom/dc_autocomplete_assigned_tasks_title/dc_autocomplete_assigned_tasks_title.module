@@ -11,14 +11,9 @@ function dc_autocomplete_assigned_tasks_title_form_alter(&$form, &$form_state, $
  if ($form_id == 'assigned_tasks_node_form') {
   drupal_add_js(drupal_get_path('module', 'dc_autocomplete_assigned_tasks_title') . '/dc_autocomplete_assigned_tasks_title.js');
 
-  $form['field_nid_task'] = array(
-   '#type' => 'select',
-   '#title' => 'Tasks:',
-   '#options' => _dc_autocomplete_assigned_tasks_title_get_tasks(),
-   '#ajax' => array(
-    'callback' => '_dc_autocomplete_assigned_tasks_title_set_value',
-    'wrapper' => 'title',
-   ),
+  $form['field_nid_task'][LANGUAGE_NONE]['#ajax'] = array(
+   'callback' => '_dc_autocomplete_assigned_tasks_title_set_value',
+   'wrapper' => 'title',
   );
 
   $form['field_nid_task']['#attributes']['class'][] = 'field_nid_task';

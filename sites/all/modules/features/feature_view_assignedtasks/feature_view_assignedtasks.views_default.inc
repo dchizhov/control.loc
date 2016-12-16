@@ -88,6 +88,11 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Sort criterion: Content: Task topic (field_task_topic) */
+  $handler->display->display_options['sorts']['field_task_topic_target_id']['id'] = 'field_task_topic_target_id';
+  $handler->display->display_options['sorts']['field_task_topic_target_id']['table'] = 'field_data_field_task_topic';
+  $handler->display->display_options['sorts']['field_task_topic_target_id']['field'] = 'field_task_topic_target_id';
+  $handler->display->display_options['sorts']['field_task_topic_target_id']['expose']['label'] = 'Task topic (field_task_topic)';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -228,6 +233,12 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['fields']['nothing']['alter']['path'] = 'change-status/ajax/[nid]';
   $handler->display->display_options['fields']['nothing']['alter']['link_class'] = 'use-ajax';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */
@@ -286,26 +297,31 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['relationships']['field_nid_task_target_id']['table'] = 'field_data_field_nid_task';
   $handler->display->display_options['relationships']['field_nid_task_target_id']['field'] = 'field_nid_task_target_id';
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Task */
-  $handler->display->display_options['fields']['field_nid_task']['id'] = 'field_nid_task';
-  $handler->display->display_options['fields']['field_nid_task']['table'] = 'field_data_field_nid_task';
-  $handler->display->display_options['fields']['field_nid_task']['field'] = 'field_nid_task';
-  $handler->display->display_options['fields']['field_nid_task']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_nid_task']['settings'] = array(
-    'link' => 0,
-  );
-  /* Field: Content: Body */
-  $handler->display->display_options['fields']['body']['id'] = 'body';
-  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
-  $handler->display->display_options['fields']['body']['field'] = 'body';
-  $handler->display->display_options['fields']['body']['relationship'] = 'field_nid_task_target_id';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['fields']['title_1']['table'] = 'node';
+  $handler->display->display_options['fields']['title_1']['field'] = 'title';
+  $handler->display->display_options['fields']['title_1']['relationship'] = 'field_nid_task_target_id';
+  $handler->display->display_options['fields']['title_1']['label'] = '';
+  $handler->display->display_options['fields']['title_1']['element_label_colon'] = FALSE;
   /* Field: Content: Post date */
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'node';
   $handler->display->display_options['fields']['created']['field'] = 'created';
   $handler->display->display_options['fields']['created']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['created']['date_format'] = 'time ago';
+  $handler->display->display_options['fields']['created']['date_format'] = 'short';
   $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Sort criterion: Content: Task topic (field_task_topic) */
+  $handler->display->display_options['sorts']['field_task_topic_target_id']['id'] = 'field_task_topic_target_id';
+  $handler->display->display_options['sorts']['field_task_topic_target_id']['table'] = 'field_data_field_task_topic';
+  $handler->display->display_options['sorts']['field_task_topic_target_id']['field'] = 'field_task_topic_target_id';
+  $handler->display->display_options['sorts']['field_task_topic_target_id']['expose']['label'] = 'Task topic (field_task_topic)';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Employee (field_nid_employee) */
   $handler->display->display_options['arguments']['field_nid_employee_target_id']['id'] = 'field_nid_employee_target_id';
@@ -351,22 +367,20 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Tasks is done';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
-  $handler->display->display_options['style_plugin'] = 'table';
-  $handler->display->display_options['style_options']['columns'] = array(
-    'field_nid_task' => 'field_nid_task',
-  );
-  $handler->display->display_options['style_options']['default'] = '-1';
-  $handler->display->display_options['style_options']['info'] = array(
-    'field_nid_task' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'field_task_topic',
+      'rendered' => 1,
+      'rendered_strip' => 0,
     ),
   );
+  $handler->display->display_options['style_options']['row_class'] = 'col-lg-3 panel panel-default';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Entity Reference: Referenced Entity */
@@ -374,24 +388,44 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['relationships']['field_nid_task_target_id']['table'] = 'field_data_field_nid_task';
   $handler->display->display_options['relationships']['field_nid_task_target_id']['field'] = 'field_nid_task_target_id';
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Task */
-  $handler->display->display_options['fields']['field_nid_task']['id'] = 'field_nid_task';
-  $handler->display->display_options['fields']['field_nid_task']['table'] = 'field_data_field_nid_task';
-  $handler->display->display_options['fields']['field_nid_task']['field'] = 'field_nid_task';
-  $handler->display->display_options['fields']['field_nid_task']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_nid_task']['settings'] = array(
-    'link' => 1,
-  );
-  /* Field: Content: Body */
-  $handler->display->display_options['fields']['body']['id'] = 'body';
-  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
-  $handler->display->display_options['fields']['body']['field'] = 'body';
-  $handler->display->display_options['fields']['body']['relationship'] = 'field_nid_task_target_id';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['relationship'] = 'field_nid_task_target_id';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
   /* Field: Content: Date of completion */
   $handler->display->display_options['fields']['field_date_of_completion']['id'] = 'field_date_of_completion';
   $handler->display->display_options['fields']['field_date_of_completion']['table'] = 'field_data_field_date_of_completion';
   $handler->display->display_options['fields']['field_date_of_completion']['field'] = 'field_date_of_completion';
-  $handler->display->display_options['fields']['field_date_of_completion']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_date_of_completion']['label'] = 'Spent time';
+  $handler->display->display_options['fields']['field_date_of_completion']['element_type'] = 'span';
+  $handler->display->display_options['fields']['field_date_of_completion']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_date_of_completion']['type'] = 'text_plain';
+  /* Field: Content: Task topic */
+  $handler->display->display_options['fields']['field_task_topic']['id'] = 'field_task_topic';
+  $handler->display->display_options['fields']['field_task_topic']['table'] = 'field_data_field_task_topic';
+  $handler->display->display_options['fields']['field_task_topic']['field'] = 'field_task_topic';
+  $handler->display->display_options['fields']['field_task_topic']['relationship'] = 'field_nid_task_target_id';
+  $handler->display->display_options['fields']['field_task_topic']['label'] = '';
+  $handler->display->display_options['fields']['field_task_topic']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_task_topic']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_task_topic']['settings'] = array(
+    'link' => 0,
+  );
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Sort criterion: Content: Task topic (field_task_topic) */
+  $handler->display->display_options['sorts']['field_task_topic_target_id']['id'] = 'field_task_topic_target_id';
+  $handler->display->display_options['sorts']['field_task_topic_target_id']['table'] = 'field_data_field_task_topic';
+  $handler->display->display_options['sorts']['field_task_topic_target_id']['field'] = 'field_task_topic_target_id';
+  $handler->display->display_options['sorts']['field_task_topic_target_id']['relationship'] = 'field_nid_task_target_id';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Employee (field_nid_employee) */
   $handler->display->display_options['arguments']['field_nid_employee_target_id']['id'] = 'field_nid_employee_target_id';
