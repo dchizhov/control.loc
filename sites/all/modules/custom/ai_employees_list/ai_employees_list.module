@@ -10,59 +10,59 @@ require_once 'includes/ai_employees_list.inc';
  * Implements hook_block_info().
  */
 function ai_employees_list_block_info() {
- $blocks = array();
+  $blocks = array();
 
- $blocks['employee_list'] = array(
-  'info' => t('Show employees list with task statistics'),
- );
- $blocks['tasks_list_download'] = array(
-  'info' => t('Provides link to download all tasks in doc format'),
- );
+  $blocks['employee_list'] = array(
+    'info' => t('Show employees list with task statistics'),
+  );
+  $blocks['tasks_list_download'] = array(
+    'info' => t('Provides link to download all tasks in doc format'),
+  );
 
- $blocks['employee_list_not_active'] = array(
-  'info' => t('Show employees that don\'t active list with task statistics'),
- );
- return $blocks;
+  $blocks['employee_list_not_active'] = array(
+    'info' => t('Show employees that don\'t active list with task statistics'),
+  );
+  return $blocks;
 }
 
 /**
  * Implements hook_block_view().
  */
 function ai_employees_list_block_view($delta = '') {
- $block = array();
+  $block = array();
 
- $employees_list = ai_employees_list_get_list();
+  $employees_list = ai_employees_list_get_list();
 
- switch ($delta) {
-  case 'employee_list':
-   $block['subject'] = 'Employees list';
-   $block['content'] = theme('table', ai_employees_list_prepare_list($employees_list));
-   break;
+  switch ($delta) {
+    case 'employee_list':
+      $block['subject'] = 'Employees list';
+      $block['content'] = theme('table', ai_employees_list_prepare_list($employees_list));
+      break;
 
-  case 'employee_list_not_active':
-   $block['subject'] = 'Employees list who fired from work';
-   $block['content'] = theme('table', ai_employees_list_prepare_list_who_leave($employees_list));
-   break;
+    case 'employee_list_not_active':
+      $block['subject'] = 'Employees list who fired from work';
+      $block['content'] = theme('table', ai_employees_list_prepare_list_who_leave($employees_list));
+      break;
 
-  case 'tasks_list_download':
-   $block['subject'] = 'Download tasks list';
-   $block['content'] = l(t('Download tasks list in doc format'), 'doc-file-download/');
-   break;
- }
+    case 'tasks_list_download':
+      $block['subject'] = 'Download tasks list';
+      $block['content'] = l(t('Download tasks list in doc format'), 'doc-file-download/');
+      break;
+  }
 
- return $block;
+  return $block;
 }
 
 /**
  * Implements hook_theme().
  */
 function ai_employees_list_theme() {
- return array(
-  'cool_progressbar' => array(
-   'variables' => array(
-    'percentage' => NULL,
-   ),
-   'template' => 'templates/cool_progressbar',
-  ),
- );
+  return array(
+    'cool_progressbar' => array(
+      'variables' => array(
+        'percentage' => NULL,
+      ),
+      'template' => 'templates/cool_progressbar',
+    ),
+  );
 }
