@@ -3,6 +3,9 @@
  * @file
  * Module for listing existing employees and their task statistics.
  */
+define('AI_EMPLOYEES_LIST_SECONDS_IN_MINUTE', '60');
+define('AI_EMPLOYEES_LIST_SECONDS_IN_HOUR', '3600');
+define('AI_EMPLOYEES_LIST_SECONDS_IN_DAY', '86400');
 
 /**
  * Function to get employees list with tasks statistics.
@@ -11,11 +14,12 @@ function ai_employees_list_get_list() {
   $employees_ids = array_keys(ai_employees_list_get_employees_or_tasks('employees'));
   $employees_nodes = node_load_multiple($employees_ids);
   $all_tasks = count(ai_employees_list_get_employees_or_tasks('tasks'));
-
   $employees_list = array();
   foreach ($employees_nodes as $employee_node) {
     $done = ai_employees_list_get_tasks_quantity($employee_node->nid, DC_CHANGER_TASK_STATUS_DONE);
     $in_progress = ai_employees_list_get_tasks_quantity($employee_node->nid, DC_CHANGER_TASK_STATUS_IN_PROGRESS);
+    $spent_time = ai_employees_list_get_spent_time_list($employee_node->nid);
+
     $employees_list[] = array(
       'status' => $employee_node->status,
       'name' => l(check_plain($employee_node->title), 'node/' . $employee_node->nid, array()),
@@ -23,6 +27,7 @@ function ai_employees_list_get_list() {
       'in_progress' => $in_progress,
       'all' => $all_tasks,
       'percentage' => !empty($all_tasks) ? number_format($done * 100 / $all_tasks) : 0,
+      'spent_time' => $spent_time['time'],
     );
   }
 
@@ -33,6 +38,37 @@ function ai_employees_list_get_list() {
   array_multisort($default_sort_criterion, SORT_DESC, $employees_list);
 
   return $employees_list;
+}
+
+/**
+ * Query to DB. Return List of spent time.
+ */
+function ai_employees_list_get_spent_time_list($employee_target_id) {
+  $query = db_select('field_data_field_date_of_completion', 'fdfdoc');
+  $query->innerJoin('field_data_field_nid_employee', 'fdfne', 'fdfne.entity_id = fdfdoc.entity_id');
+  $query->fields('fdfdoc', array('field_date_of_completion_value'));
+  $query->condition('fdfne.field_nid_employee_target_id', $employee_target_id);
+
+  return ai_employees_list_sum_spent_time_list($query->execute()->fetchall());
+}
+
+/**
+ * Sum spent time employees
+ */
+function ai_employees_list_sum_spent_time_list($result) {
+  $result['time'] = 0;
+  foreach ($result as $item) {
+    if (isset($item->field_date_of_completion_value)) {
+      $time = explode(':', $item->field_date_of_completion_value);
+      if (isset($time[0]) && isset($time[1]) && isset($time[2]) && isset($time[3])) {
+        $item->field_date_of_completion_value = $time[0] * AI_EMPLOYEES_LIST_SECONDS_IN_DAY + $time[1] * AI_EMPLOYEES_LIST_SECONDS_IN_HOUR + $time[2] * AI_EMPLOYEES_LIST_SECONDS_IN_MINUTE + $time[3];
+      }
+      $result['time'] += $item->field_date_of_completion_value;
+    }
+  }
+  $result['time'] = gmdate("H:i:s", $result['time']);
+
+  return $result;
 }
 
 /**
@@ -77,6 +113,7 @@ function ai_employees_list_prepare_list($lists) {
     'Done',
     'Total',
     'Employee\'s progress',
+    'Total spent time'
   );
   $rows = array();
   foreach ($lists as $list) {
@@ -88,6 +125,7 @@ function ai_employees_list_prepare_list($lists) {
           check_plain($list['done']),
           check_plain($list['all']),
           theme('cool_progressbar', array('percentage' => check_plain($list['percentage']))),
+          check_plain($list['spent_time']),
         ),
       );
     }
@@ -106,6 +144,7 @@ function ai_employees_list_prepare_list_who_leave($lists) {
     'Done',
     'Total',
     'Employee\'s progress',
+    'Total spent time'
   );
   $rows = array();
   foreach ($lists as $list) {
@@ -117,6 +156,7 @@ function ai_employees_list_prepare_list_who_leave($lists) {
           check_plain($list['done']),
           check_plain($list['all']),
           theme('cool_progressbar', array('percentage' => check_plain($list['percentage']))),
+          check_plain($list['spent_time']),
         ),
       );
     }

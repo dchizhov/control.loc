@@ -40,7 +40,7 @@ function ai_employees_list_block_view($delta = '') {
       break;
 
     case 'employee_list_not_active':
-      $block['subject'] = 'Employees list who fired from work';
+      $block['subject'] = 'Employees list who fired from job';
       $block['content'] = theme('table', ai_employees_list_prepare_list_who_leave($employees_list));
       break;
 
