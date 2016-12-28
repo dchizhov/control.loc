@@ -3,6 +3,9 @@
  * @file
  * Module for listing existing employees and their task statistics.
  */
+define('AI_EMPLOYEES_LIST_SECONDS_IN_MINUTE', '60');
+define('AI_EMPLOYEES_LIST_SECONDS_IN_HOUR', '3600');
+define('AI_EMPLOYEES_LIST_SECONDS_IN_DAY', '86400');
 
 /**
  * Function to get employees list with tasks statistics.
@@ -58,7 +61,7 @@ function ai_employees_list_sum_spent_time_list($result) {
     if (isset($item->field_date_of_completion_value)) {
       $time = explode(':', $item->field_date_of_completion_value);
       if (isset($time[0]) && isset($time[1]) && isset($time[2]) && isset($time[3])) {
-        $item->field_date_of_completion_value = $time[0] * 86400 + $time[1] * 3600 + $time[2] * 60 + $time[3];
+        $item->field_date_of_completion_value = $time[0] * AI_EMPLOYEES_LIST_SECONDS_IN_DAY + $time[1] * AI_EMPLOYEES_LIST_SECONDS_IN_HOUR + $time[2] * AI_EMPLOYEES_LIST_SECONDS_IN_MINUTE + $time[3];
       }
       $result['time'] += $item->field_date_of_completion_value;
     }
