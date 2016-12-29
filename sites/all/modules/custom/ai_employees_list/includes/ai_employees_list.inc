@@ -66,9 +66,42 @@ function ai_employees_list_sum_spent_time_list($result) {
       $result['time'] += $item->field_date_of_completion_value;
     }
   }
-  $result['time'] = gmdate("H:i:s", $result['time']);
+  $result['time'] = ai_employees_list_convert_second_to_time_format($result['time']);
 
   return $result;
+}
+
+/**
+ * Format second to date format D Day(s) HH : MM : SS
+ */
+function ai_employees_list_convert_second_to_time_format($allSeconds) {
+  $days = floor($allSeconds / AI_EMPLOYEES_LIST_SECONDS_IN_DAY);
+  $hours = floor($allSeconds / AI_EMPLOYEES_LIST_SECONDS_IN_HOUR) - $days * AI_EMPLOYEES_LIST_SECONDS_IN_DAY;
+  $minutes = floor($allSeconds / AI_EMPLOYEES_LIST_SECONDS_IN_MINUTE) - $hours * AI_EMPLOYEES_LIST_SECONDS_IN_HOUR;
+  $seconds = $allSeconds - $minutes * AI_EMPLOYEES_LIST_SECONDS_IN_MINUTE;
+
+  if ($days > 1 || $days == 0) {
+    $days .= ' Days ';
+  }
+  else {
+    $days .= ' Day ';
+  }
+
+  if ($hours < 10) {
+    $hours = '0' . $hours;
+  }
+
+  if ($minutes < 10) {
+    $minutes = '0' . $minutes;
+  }
+
+  if ($seconds < 10) {
+    $seconds = '0' . $seconds;
+  }
+
+  $formattedTime = $days . $hours . ':' . $minutes . ':' . $seconds;
+
+  return $formattedTime;
 }
 
 /**
