@@ -76,9 +76,9 @@ function ai_employees_list_sum_spent_time_list($result) {
  */
 function ai_employees_list_convert_second_to_time_format($allSeconds) {
   $days = floor($allSeconds / AI_EMPLOYEES_LIST_SECONDS_IN_DAY);
-  $hours = floor($allSeconds / AI_EMPLOYEES_LIST_SECONDS_IN_HOUR) - $days * AI_EMPLOYEES_LIST_SECONDS_IN_DAY;
-  $minutes = floor($allSeconds / AI_EMPLOYEES_LIST_SECONDS_IN_MINUTE) - $hours * AI_EMPLOYEES_LIST_SECONDS_IN_HOUR;
-  $seconds = $allSeconds - $minutes * AI_EMPLOYEES_LIST_SECONDS_IN_MINUTE;
+  $hours = floor(($allSeconds - $days * AI_EMPLOYEES_LIST_SECONDS_IN_DAY) / AI_EMPLOYEES_LIST_SECONDS_IN_HOUR);
+  $minutes = floor(($allSeconds - ($days * AI_EMPLOYEES_LIST_SECONDS_IN_DAY + $hours * AI_EMPLOYEES_LIST_SECONDS_IN_HOUR)) / AI_EMPLOYEES_LIST_SECONDS_IN_MINUTE);
+  $seconds = $allSeconds - ($days * AI_EMPLOYEES_LIST_SECONDS_IN_DAY + $hours * AI_EMPLOYEES_LIST_SECONDS_IN_HOUR + $minutes * AI_EMPLOYEES_LIST_SECONDS_IN_MINUTE);
 
   if ($days > 1 || $days == 0) {
     $days .= ' Days ';
