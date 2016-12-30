@@ -12,42 +12,43 @@ define('DC_CHANGER_TASK_STATUS_IN_PROGRESS', '2');
  * Implements hook_menu().
  */
 function dc_changer_menu() {
- drupal_add_library('system', 'drupal.ajax');
+  drupal_add_library('system', 'drupal.ajax');
 
- $items['change-status/nojs/%'] = array(
-  'page callback' => '_dc_changer_update',
-  'page arguments' => array(1, 2),
-  'access arguments' => array('permission name'),
-  'type' => MENU_CALLBACK,
- );
+  $items['change-status/nojs/%'] = array(
+    'page callback' => '_dc_changer_update',
+    'page arguments' => array(1, 2),
+    'access arguments' => array('permission name'),
+    'type' => MENU_CALLBACK,
+  );
 
- $items['change-status/ajax/%'] = array(
-   'delivery callback' => 'ajax_deliver',
-  ) + $items['change-status/nojs/%'];
+  $items['change-status/ajax/%'] = array(
+      'delivery callback' => 'ajax_deliver',
+    ) + $items['change-status/nojs/%'];
 
- return $items;
+  return $items;
 }
 
 /**
  * Function creates and returns ajax_commands to change status for assigned tasks.
  */
 function _dc_changer_update($ajax, $nid) {
- $is_ajax = $ajax === 'ajax';
+  $is_ajax = $ajax === 'ajax';
 
- $node = node_load($nid);
- $node->field_status['und'][0]['tid'] = DC_CHANGER_TASK_STATUS_DONE;
- node_save($node);
+  $node = node_load($nid);
+  $node->field_date_of_completion['und'][0]['value'] = time();
+  $node->field_status['und'][0]['tid'] = DC_CHANGER_TASK_STATUS_DONE;
+  node_save($node);
 
- $target_status = taxonomy_term_load(DC_CHANGER_TASK_STATUS_DONE);
+  $target_status = taxonomy_term_load(DC_CHANGER_TASK_STATUS_DONE);
 
- if ($is_ajax) {
-  $commands = array();
-  $commands[] = ajax_command_remove(".control-actions-link[data-nid=$nid]");
-  $commands[] = ajax_command_html(".assigned-task-status[data-nid=$nid]", $target_status->name);
-  return array(
-   '#type' => 'ajax',
-   '#commands' => $commands,
-  );
- }
+  if ($is_ajax) {
+    $commands = array();
+    $commands[] = ajax_command_remove(".control-actions-link[data-nid=$nid]");
+    $commands[] = ajax_command_html(".assigned-task-status[data-nid=$nid]", $target_status->name);
+    return array(
+      '#type' => 'ajax',
+      '#commands' => $commands,
+    );
+  }
 
 }

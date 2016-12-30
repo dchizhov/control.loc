@@ -396,14 +396,12 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
-  /* Field: Content: Date of completion */
-  $handler->display->display_options['fields']['field_date_of_completion']['id'] = 'field_date_of_completion';
-  $handler->display->display_options['fields']['field_date_of_completion']['table'] = 'field_data_field_date_of_completion';
-  $handler->display->display_options['fields']['field_date_of_completion']['field'] = 'field_date_of_completion';
-  $handler->display->display_options['fields']['field_date_of_completion']['label'] = 'Spent time';
-  $handler->display->display_options['fields']['field_date_of_completion']['element_type'] = 'span';
-  $handler->display->display_options['fields']['field_date_of_completion']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['field_date_of_completion']['type'] = 'text_plain';
+  /* Field: Content: Spent Time */
+  $handler->display->display_options['fields']['field_spent_time']['id'] = 'field_spent_time';
+  $handler->display->display_options['fields']['field_spent_time']['table'] = 'field_data_field_spent_time';
+  $handler->display->display_options['fields']['field_spent_time']['field'] = 'field_spent_time';
+  $handler->display->display_options['fields']['field_spent_time']['element_type'] = 'span';
+  $handler->display->display_options['fields']['field_spent_time']['element_default_classes'] = FALSE;
   /* Field: Content: Task topic */
   $handler->display->display_options['fields']['field_task_topic']['id'] = 'field_task_topic';
   $handler->display->display_options['fields']['field_task_topic']['table'] = 'field_data_field_task_topic';
@@ -416,16 +414,16 @@ function feature_view_assignedtasks_views_default_views() {
     'link' => 0,
   );
   $handler->display->display_options['defaults']['sorts'] = FALSE;
-  /* Sort criterion: Content: Post date */
-  $handler->display->display_options['sorts']['created']['id'] = 'created';
-  $handler->display->display_options['sorts']['created']['table'] = 'node';
-  $handler->display->display_options['sorts']['created']['field'] = 'created';
-  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Sort criterion: Content: Published */
+  $handler->display->display_options['sorts']['status']['id'] = 'status';
+  $handler->display->display_options['sorts']['status']['table'] = 'node';
+  $handler->display->display_options['sorts']['status']['field'] = 'status';
   /* Sort criterion: Content: Task topic (field_task_topic) */
   $handler->display->display_options['sorts']['field_task_topic_target_id']['id'] = 'field_task_topic_target_id';
   $handler->display->display_options['sorts']['field_task_topic_target_id']['table'] = 'field_data_field_task_topic';
   $handler->display->display_options['sorts']['field_task_topic_target_id']['field'] = 'field_task_topic_target_id';
   $handler->display->display_options['sorts']['field_task_topic_target_id']['relationship'] = 'field_nid_task_target_id';
+  $handler->display->display_options['sorts']['field_task_topic_target_id']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Employee (field_nid_employee) */
   $handler->display->display_options['arguments']['field_nid_employee_target_id']['id'] = 'field_nid_employee_target_id';
