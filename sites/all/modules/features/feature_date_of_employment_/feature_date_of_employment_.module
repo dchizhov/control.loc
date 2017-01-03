@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Feature Date of employment  feature.
+ */
+
+include_once 'feature_date_of_employment_.features.inc';
