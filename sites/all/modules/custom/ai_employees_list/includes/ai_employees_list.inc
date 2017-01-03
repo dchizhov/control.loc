@@ -44,9 +44,9 @@ function ai_employees_list_get_list() {
  * Query to DB. Return List of spent time.
  */
 function ai_employees_list_get_spent_time_list($employee_target_id) {
-  $query = db_select('field_data_field_date_of_completion', 'fdfdoc');
-  $query->innerJoin('field_data_field_nid_employee', 'fdfne', 'fdfne.entity_id = fdfdoc.entity_id');
-  $query->fields('fdfdoc', array('field_date_of_completion_value'));
+  $query = db_select('field_data_field_spent_time', 'fdfst');
+  $query->innerJoin('field_data_field_nid_employee', 'fdfne', 'fdfne.entity_id = fdfst.entity_id');
+  $query->fields('fdfst', array('field_spent_time_value'));
   $query->condition('fdfne.field_nid_employee_target_id', $employee_target_id);
 
   return ai_employees_list_sum_spent_time_list($query->execute()->fetchall());
@@ -58,12 +58,12 @@ function ai_employees_list_get_spent_time_list($employee_target_id) {
 function ai_employees_list_sum_spent_time_list($result) {
   $result['time'] = 0;
   foreach ($result as $item) {
-    if (isset($item->field_date_of_completion_value)) {
-      $time = explode(':', $item->field_date_of_completion_value);
+    if (isset($item->field_spent_time_value)) {
+      $time = explode(':', $item->field_spent_time_value);
       if (isset($time[0]) && isset($time[1]) && isset($time[2]) && isset($time[3])) {
-        $item->field_date_of_completion_value = $time[0] * AI_EMPLOYEES_LIST_SECONDS_IN_DAY + $time[1] * AI_EMPLOYEES_LIST_SECONDS_IN_HOUR + $time[2] * AI_EMPLOYEES_LIST_SECONDS_IN_MINUTE + $time[3];
+        $item->field_spent_time_value = $time[0] * AI_EMPLOYEES_LIST_SECONDS_IN_DAY + $time[1] * AI_EMPLOYEES_LIST_SECONDS_IN_HOUR + $time[2] * AI_EMPLOYEES_LIST_SECONDS_IN_MINUTE + $time[3];
       }
-      $result['time'] += $item->field_date_of_completion_value;
+      $result['time'] += $item->field_spent_time_value;
     }
   }
   $result['time'] = ai_employees_list_convert_second_to_time_format($result['time']);
