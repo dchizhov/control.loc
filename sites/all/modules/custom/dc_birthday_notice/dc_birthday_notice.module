@@ -1,0 +1,40 @@
+<?php
+/**
+ * @file
+ * Show notice when employee has birthday
+ */
+define('DC_BIRTHDAY_NOTICE_COUNT_SHOW_NOTICE', 10);
+
+/**
+ * Implements hook_preprocess().
+ */
+function dc_birthday_notice_preprocess(&$vars, $hook) {
+  if ($hook == 'page' && drupal_is_front_page()) {
+    $nodes = node_load_multiple(array(), array('type' => 'employees'));
+    foreach ($nodes as $node) {
+      $born_date = new DateTime(date('Y-m-d', $node->field_date_of_birthday['und'][0]['value']));
+      $next_day = new DateTime(date('Y-m-d'));
+
+      $born_date = $born_date->format('j n');
+      $next_day = $next_day->modify('+1 day')->format('j n');
+
+      if (!isset($_SESSION['count_show_notice_' . $node->title])) {
+        $_SESSION['count_show_notice_' . $node->title] = 0;
+      }
+
+      if ($born_date == $next_day && $_SESSION['count_show_notice_' . $node->title] < DC_BIRTHDAY_NOTICE_COUNT_SHOW_NOTICE) {
+        drupal_add_js('https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js');
+        drupal_add_js(drupal_get_path('module', 'dc_birthday_notice') . '/dc_birthday_notice.js');
+        $vars['scripts'] = drupal_get_js();
+
+        $vars['page']['content']['system_main']['content']['#markup'] .= "<div class='notice'><span class='title'>$node->title</span> has birthday tomorrow</div>";
+
+        if (!isset($_SESSION['count_show_notice_' . $node->title])) {
+          $_SESSION['count_show_notice_' . $node->title] = 0;
+        }
+
+        $_SESSION['count_show_notice_' . $node->title]++;
+      }
+    }
+  }
+}

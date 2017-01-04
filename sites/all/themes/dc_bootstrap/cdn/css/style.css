@@ -1,3 +1,37 @@
-/**
- * Place your custom styles here.
- */
+.notice {
+    padding: 15px;
+    display: inline-block;
+    position: fixed;
+    z-index: 1000;
+    right: 30px;
+    top: 93px;
+    background-color: #d7ebf5;
+    opacity: 0.8;
+    text-align: center;
+    color: #3a89a6;
+    font-size: 1.1em;
+    border: 1px solid #319092;
+    border-radius: 4%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.notice .title {
+    margin-bottom: 5px;
+    color: #317092;
+    font-weight: bold;
+}
+
+.close_notice {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    height: 27px;
+    width: 27px;
+    background-color: #4F4C4F;
+    border-radius: 100%;
+    border: 2px solid white;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
