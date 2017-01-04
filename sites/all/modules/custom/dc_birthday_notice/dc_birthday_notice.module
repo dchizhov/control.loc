@@ -18,22 +18,22 @@ function dc_birthday_notice_preprocess(&$vars, $hook) {
       $born_date = $born_date->format('j n');
       $next_day = $next_day->modify('+1 day')->format('j n');
 
-      if (!isset($_SESSION['count_show_notice'])) {
-        $_SESSION['count_show_notice'] = 0;
+      if (!isset($_SESSION['count_show_notice_' . $node->title])) {
+        $_SESSION['count_show_notice_' . $node->title] = 0;
       }
 
-      if ($born_date == $next_day && $_SESSION['count_show_notice'] < DC_BIRTHDAY_NOTICE_COUNT_SHOW_NOTICE) {
+      if ($born_date == $next_day && $_SESSION['count_show_notice_' . $node->title] < DC_BIRTHDAY_NOTICE_COUNT_SHOW_NOTICE) {
         drupal_add_js('https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js');
         drupal_add_js(drupal_get_path('module', 'dc_birthday_notice') . '/dc_birthday_notice.js');
         $vars['scripts'] = drupal_get_js();
 
         $vars['page']['content']['system_main']['content']['#markup'] .= "<div class='notice'><span class='title'>$node->title</span> has birthday tomorrow</div>";
 
-        if (!isset($_SESSION['count_show_notice'])) {
-          $_SESSION['count_show_notice'] = 0;
+        if (!isset($_SESSION['count_show_notice_' . $node->title])) {
+          $_SESSION['count_show_notice_' . $node->title] = 0;
         }
 
-        $_SESSION['count_show_notice']++;
+        $_SESSION['count_show_notice_' . $node->title]++;
       }
     }
   }
