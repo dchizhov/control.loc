@@ -98,9 +98,9 @@ function feature_ct_employee_field_default_field_instances() {
     'label' => 'Date of finish probation',
     'required' => 0,
     'settings' => array(
-      'default_value' => 'blank',
+      'default_value' => 'strtotime',
       'default_value2' => 'same',
-      'default_value_code' => '',
+      'default_value_code' => '+3 month',
       'default_value_code2' => '',
       'user_register_form' => FALSE,
     ),
@@ -178,55 +178,11 @@ function feature_ct_employee_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-employees-field_got_the_job'.
-  $field_instances['node-employees-field_got_the_job'] = array(
-    'bundle' => 'employees',
-    'default_value' => array(
-      0 => array(
-        'value' => 0,
-      ),
-    ),
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'list',
-        'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 2,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_got_the_job',
-    'label' => 'Got the job',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(
-        'display_label' => 0,
-      ),
-      'type' => 'options_onoff',
-      'weight' => 5,
-    ),
-  );
-
   // Translatables
   // Included for use with string extractors like potx.
   t('Date of birthday');
   t('Date of finish probation');
   t('Date of start probation');
-  t('Got the job');
 
   return $field_instances;
 }
