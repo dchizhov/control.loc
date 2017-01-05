@@ -30,7 +30,6 @@ function dc_birthday_notice_preprocess(&$vars, $hook) {
       }
 
       if (($born_date == $next_day || $born_date == $today) && $_SESSION['count_show_notice_' . $node->title . '_' . $today] < DC_BIRTHDAY_NOTICE_COUNT_SHOW_NOTICE) {
-        drupal_add_js('https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js');
         drupal_add_js(drupal_get_path('module', 'dc_birthday_notice') . '/dc_birthday_notice.js');
         $vars['scripts'] = drupal_get_js();
 

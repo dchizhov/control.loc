@@ -54,6 +54,50 @@ function feature_ct_task_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-tasks-field_approximate_time'.
+  $field_instances['node-tasks-field_approximate_time'] = array(
+    'bundle' => 'tasks',
+    'default_value' => array(
+      0 => array(
+        'value' => '00:00:00:00',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Format DD:HH:MM:SS',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 4,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_approximate_time',
+    'label' => 'Approximate time',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 31,
+    ),
+  );
+
   // Exported field_instance: 'node-tasks-field_comment'.
   $field_instances['node-tasks-field_comment'] = array(
     'bundle' => 'tasks',
@@ -187,8 +231,10 @@ function feature_ct_task_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Approximate time');
   t('Body');
   t('Comment');
+  t('Format DD:HH:MM:SS');
   t('Task tags');
   t('Task topic');
 

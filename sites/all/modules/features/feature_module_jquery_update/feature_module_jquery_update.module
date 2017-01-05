@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Feature Module jQuery Update feature.
+ */
+
+include_once 'feature_module_jquery_update.features.inc';
