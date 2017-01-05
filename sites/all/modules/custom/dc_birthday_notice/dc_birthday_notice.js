@@ -1,17 +1,17 @@
-$(document).ready(function () {
-    $('.notice').prependTo('.front');
-    $('.notice').hide();
-    $('.notice').show(200);
+jQuery(document).ready(function () {
+    jQuery('.notice').prependTo('.front');
+    jQuery('.notice').hide();
+    jQuery('.notice').show(200);
     setTimeout(function () {
-        $('.notice').hide(200);
+        jQuery('.notice').hide(200);
     },10000);
-    $('.notice').hover(function () {
-        $(this).prepend('<div class="close_notice"></div>');
-        $('.close_notice').html('x');
-        $('.close_notice').on('click', function () {
-            $('.notice').hide(200);
+    jQuery('.notice').hover(function () {
+        jQuery(this).prepend('<div class="close_notice"></div>');
+        jQuery('.close_notice').html('x');
+        jQuery('.close_notice').on('click', function () {
+            jQuery('.notice').hide(200);
         })
     },function () {
-        $('.close_notice').remove();
+        jQuery('.close_notice').remove();
     });
 });

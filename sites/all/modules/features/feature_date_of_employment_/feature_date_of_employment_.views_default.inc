@@ -91,6 +91,16 @@ function feature_date_of_employment__views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  /* Field: Content: Email */
+  $handler->display->display_options['fields']['field_email']['id'] = 'field_email';
+  $handler->display->display_options['fields']['field_email']['table'] = 'field_data_field_email';
+  $handler->display->display_options['fields']['field_email']['field'] = 'field_email';
+  $handler->display->display_options['fields']['field_email']['element_label_colon'] = FALSE;
+  /* Field: Content: Phone number */
+  $handler->display->display_options['fields']['field_phone_number']['id'] = 'field_phone_number';
+  $handler->display->display_options['fields']['field_phone_number']['table'] = 'field_data_field_phone_number';
+  $handler->display->display_options['fields']['field_phone_number']['field'] = 'field_phone_number';
+  $handler->display->display_options['fields']['field_phone_number']['element_label_colon'] = FALSE;
   /* Field: Content: Date of birthday */
   $handler->display->display_options['fields']['field_date_of_birthday']['id'] = 'field_date_of_birthday';
   $handler->display->display_options['fields']['field_date_of_birthday']['table'] = 'field_data_field_date_of_birthday';
@@ -130,15 +140,6 @@ function feature_date_of_employment__views_default_views() {
     'multiple_to' => '',
     'show_remaining_days' => 0,
   );
-  /* Field: Content: Published */
-  $handler->display->display_options['fields']['status']['id'] = 'status';
-  $handler->display->display_options['fields']['status']['table'] = 'node';
-  $handler->display->display_options['fields']['status']['field'] = 'status';
-  $handler->display->display_options['fields']['status']['label'] = '';
-  $handler->display->display_options['fields']['status']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['status']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['status']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['status']['not'] = 0;
   /* Sort criterion: Content: Published */
   $handler->display->display_options['sorts']['status']['id'] = 'status';
   $handler->display->display_options['sorts']['status']['table'] = 'node';
