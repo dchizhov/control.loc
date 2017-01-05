@@ -4,6 +4,10 @@
  * Module counts time difference between starting and completing assigned
  * task and creates token with it.
  */
+define('AI_TIME_DIFFERENCE_START_WORK_DAY', 9);
+define('AI_TIME_DIFFERENCE_END_WORK_DAY', 19);
+define('AI_TIME_DIFFERENCE_WORK_TIME', 10);
+define('AI_TIME_DIFFERENCE_OFF_WORK_HOURS', 14);
 
 /**
  * Implements hook token info().
@@ -42,10 +46,60 @@ function ai_time_difference_tokens($type, $tokens, array $data = array(), array 
 function ai_time_difference_get_difference() {
   $nid = arg(2);
   $node = node_load($nid);
+
   if ($node) {
-    $start = new DateTime(date('Y-m-d H:i', $node->created));
-    $end = new DateTime('now');
-    $difference = $end->diff($start);
-    return $difference->format('%D:%H:%I:%S');
+    $start = new DateTime(date('Y-m-d H:i:s', $node->created));
+    $end = new DateTime('now', new DateTimeZone('Europe/Minsk'));
+    $period = new DatePeriod($start, new DateInterval('P1D'), $end);
+
+    foreach ($period as $dt) {
+      $curr = $dt->format('D');
+      if ($curr == 'Sat' || $curr == 'Sun') {
+        $end->modify('-1 day');
+      }
+    }
+
+    $interval = $end->diff($start);
+
+    $start_hours = $period->start->format('H');
+    $end_hours = $period->end->format('H');
+
+    if ($start_hours < AI_TIME_DIFFERENCE_END_WORK_DAY && $end_hours > AI_TIME_DIFFERENCE_START_WORK_DAY && $interval->h > AI_TIME_DIFFERENCE_OFF_WORK_HOURS && $interval->d < 1) {
+      $interval->h -= AI_TIME_DIFFERENCE_OFF_WORK_HOURS;
+    }
+
+    if ($start_hours < AI_TIME_DIFFERENCE_END_WORK_DAY && $end_hours > AI_TIME_DIFFERENCE_START_WORK_DAY) {
+      if ($interval->d > 0 && $interval->h >= AI_TIME_DIFFERENCE_OFF_WORK_HOURS) {
+        $interval->h -= AI_TIME_DIFFERENCE_OFF_WORK_HOURS;
+      }
+      if ($interval->d > 0 && $interval->h < AI_TIME_DIFFERENCE_OFF_WORK_HOURS) {
+        $interval->d -= 1;
+        $interval->h += AI_TIME_DIFFERENCE_WORK_TIME;
+      }
+    }
+
+    return $interval->format('%D:%H:%I:%S');
+  }
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function ai_time_difference_update_7100() {
+  $nodes = node_load_multiple(array(), array('type' => 'assigned_tasks'));
+  foreach ($nodes as $node) {
+    $node->field_spent_time = $node->field_date_of_completion;
+    node_save($node);
+  }
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function ai_time_difference_update_7101() {
+  $nodes = node_load_multiple(array(), array('type' => 'assigned_tasks'));
+  foreach ($nodes as $node) {
+    $node->field_date_of_completion = '';
+    node_save($node);
   }
 }
