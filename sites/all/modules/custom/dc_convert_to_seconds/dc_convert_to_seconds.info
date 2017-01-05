@@ -1,0 +1,4 @@
+name = DC Convert to seconds
+description = Convert DD:HH:MM:SS to seconds
+core = 7.x
+package = Custom

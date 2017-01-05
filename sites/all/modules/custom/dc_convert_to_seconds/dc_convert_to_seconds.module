@@ -1,0 +1,8 @@
+<?php
+/**
+ * @file
+ * Convert DD:HH:MM:SS to seconds
+ */
+function __dc_convert_to_seconds_DD_HH_MM_SS($time) {
+  return $time[0] * AI_EMPLOYEES_LIST_SECONDS_IN_DAY + $time[1] * AI_EMPLOYEES_LIST_SECONDS_IN_HOUR + $time[2] * AI_EMPLOYEES_LIST_SECONDS_IN_MINUTE + $time[3];
+}
