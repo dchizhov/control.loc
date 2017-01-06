@@ -26,13 +26,20 @@ function ai_assign_task_menu() {
  * Implements hook_form_alter().
  */
 function ai_assign_task_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == "assigned_tasks_node_form"
-      && isset($form_state['build_info']['args']['short'])) {
+  if ($form_id == "assigned_tasks_node_form" && isset($form_state['build_info']['args']['short'])) {
 
     $task_id = arg(2);
     // Hide settings for modal window form.
     $form['additional_settings']['#prefix'] = '<div style="display:none;">';
     $form['additional_settings']['#suffix'] = '</div>';
+
+    $hidden_fields = array(
+      'field_date_of_completion',
+      'field_spent_time',
+      'field_spent_time_in_seconds',
+    );
+
+    __ai_assign_task_set_access_false($form, $hidden_fields);
 
     $form['field_nid_task'][LANGUAGE_NONE]['#default_value'] = $task_id;
     $form['field_nid_employee'][LANGUAGE_NONE]['#ajax'] = FALSE;
@@ -52,5 +59,17 @@ function ai_assign_task_form_alter(&$form, &$form_state, $form_id) {
       $form['field_nid_employee'][LANGUAGE_NONE]['#type'] = 'item';
       $form['field_nid_employee'][LANGUAGE_NONE]['#markup'] = 'There are no available employees.';
     }
+  }
+}
+
+/**
+ * Hide form fields setting access false
+ * First param - form
+ * Second param - fields names
+ */
+
+function __ai_assign_task_set_access_false(&$form, array $fields) {
+  foreach ($fields as $field) {
+    $form[$field]['#access'] = FALSE;
   }
 }

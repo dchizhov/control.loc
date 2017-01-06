@@ -173,7 +173,6 @@ function ai_employees_list_prepare_list($lists) {
 function ai_employees_list_prepare_list_who_leave($lists) {
   $header = array(
     'Employee',
-    'In Progress',
     'Done',
     'Total',
     'Employee\'s progress',
@@ -185,7 +184,6 @@ function ai_employees_list_prepare_list_who_leave($lists) {
       $rows[] = array(
         'data' => array(
           $list['name'],
-          check_plain($list['in_progress']),
           check_plain($list['done']),
           check_plain($list['all']),
           theme('cool_progressbar', array('percentage' => check_plain($list['percentage']))),
