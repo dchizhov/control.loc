@@ -34,7 +34,7 @@ function dc_mailer_mail($key, &$message, $params) {
 function _dc_mailer_send_email(&$form, &$form_state) {
   $employee = node_load($form_state['values']['field_nid_employee']['und'][0]['target_id']);
 
-  if (isset($employee->field_email)) {
+  if (isset($employee->field_email['und'][0]['value'])) {
     $params = _dc_mailer_get_params($form_state['values']['field_nid_task']['und'][0]['target_id']);
 
     drupal_mail('dc_mailer', 'assigned_task', $employee->field_email['und'][0]['value'], language_default(), $params, 'alex.unlitsolutions@gmail.com', TRUE);
