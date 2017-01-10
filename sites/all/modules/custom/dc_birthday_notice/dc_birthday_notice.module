@@ -35,13 +35,53 @@ function dc_birthday_notice_preprocess(&$vars, $hook) {
 
         if ($born_date == $next_day) {
           $vars['page']['content']['system_main']['content']['#markup'] .= "<div class='notice'><span class='title'>$node->title</span> has birthday tomorrow</div>";
+          foreach ($nodes as $employee) {
+
+            if (!isset($_SESSION['count_sent_messages_' . $employee->title . '_' . $today])) {
+              $_SESSION['count_sent_messages_' . $employee->title . '_' . $today] = 0;
+            }
+
+            if (isset($employee->field_email['und'][0]) && $employee->nid != $node->nid && $_SESSION['count_sent_messages_' . $employee->title . '_' . $today] < 1) {
+              $params = array('employee_name' => $node->title);
+
+              drupal_mail('dc_birthday_notice', 'birthday_tomorrow', $employee->field_email['und'][0]['value'], language_default(), $params, 'alex.unlitsolutions@gmail.com', TRUE);
+              $_SESSION['count_sent_messages_' . $employee->title . '_' . $today]++;
+            }
+          }
         }
         else {
           $vars['page']['content']['system_main']['content']['#markup'] .= "<div class='notice'><span class='title'>$node->title</span> has birthday today</div>";
-        }
+          foreach ($nodes as $employee) {
+            if (!isset($_SESSION['count_sent_messages_' . $employee->title . '_' . $today])) {
+              $_SESSION['count_sent_messages_' . $employee->title . '_' . $today] = 0;
+            }
 
+            if (isset($employee->field_email['und'][0]) && $employee->nid != $node->nid && $_SESSION['count_sent_messages_' . $employee->title . '_' . $today] < 1) {
+              $params = array('employee_name' => $node->title);
+
+              drupal_mail('dc_birthday_notice', 'birthday_today', $employee->field_email['und'][0]['value'], language_default(), $params, 'alex.unlitsolutions@gmail.com', TRUE);
+              $_SESSION['count_sent_messages_' . $employee->title . '_' . $today]++;
+            }
+          }
+        }
         $_SESSION['count_show_notice_' . $node->title . '_' . $today]++;
       }
     }
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function dc_birthday_notice_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'birthday_tomorrow':
+      $message['subject'] = t('Colleague has a birthday tomorrow');
+      $message['body'][] = t('Your Colleague ' . $params['employee_name'] . ' has a birthday tomorrow!');
+      break;
+    case 'birthday_today':
+      $message['subject'] = t('Colleague has a birthday today');
+      $message['body'][] = t('Your Colleague ' . $params['employee_name'] . ' has a birthday today!');
+      break;
   }
 }

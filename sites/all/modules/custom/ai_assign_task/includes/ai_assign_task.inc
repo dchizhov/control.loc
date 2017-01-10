@@ -33,7 +33,10 @@ function ai_assign_task_callback($js = NULL) {
   if (!empty($form_state['executed'])) {
     $output = array();
     $output[] = ctools_modal_command_dismiss();
+    $output[] = ajax_command_prepend('section.col-sm-12','<div class="alert alert-block alert-success messages status"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="element-invisible">Status message</h4>Assigned tasks has been created.</div>');
   }
+
+  drupal_get_messages();
   print ajax_render($output);
   drupal_exit();
 }
