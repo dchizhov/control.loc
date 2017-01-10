@@ -52,15 +52,15 @@ function dc_birthday_notice_preprocess(&$vars, $hook) {
         else {
           $vars['page']['content']['system_main']['content']['#markup'] .= "<div class='notice'><span class='title'>$node->title</span> has birthday today</div>";
           foreach ($nodes as $employee) {
-            if (!isset($_SESSION['count_sent_messages_' . $employee->title . '_' . $today])) {
-              $_SESSION['count_sent_messages_' . $employee->title . '_' . $today] = 0;
+            if (!isset($_SESSION['count_sent_messages_b_' . $employee->title . '_' . $today])) {
+              $_SESSION['count_sent_messages_b_' . $employee->title . '_' . $today] = 0;
             }
 
-            if (isset($employee->field_email['und'][0]) && $employee->nid != $node->nid && $_SESSION['count_sent_messages_' . $employee->title . '_' . $today] < 1) {
+            if (isset($employee->field_email['und'][0]) && $employee->nid != $node->nid && $_SESSION['count_sent_messages_b_' . $employee->title . '_' . $today] < 1) {
               $params = array('employee_name' => $node->title);
 
               drupal_mail('dc_birthday_notice', 'birthday_today', $employee->field_email['und'][0]['value'], language_default(), $params, 'alex.unlitsolutions@gmail.com', TRUE);
-              $_SESSION['count_sent_messages_' . $employee->title . '_' . $today]++;
+              $_SESSION['count_sent_messages_b_' . $employee->title . '_' . $today]++;
             }
           }
         }
