@@ -1,0 +1,14 @@
+name = Feature Module Elysia Cron
+description = Enable Elysia Cron with settings 
+core = 7.x
+package = Features Module
+version = 7.x-1.0
+dependencies[] = ctools
+dependencies[] = elysia_cron
+features[ctools][] = elysia_cron:default_elysia_cron_rules:1
+features[elysia_cron][] = :default
+features[elysia_cron][] = ctools_cron
+features[elysia_cron][] = dblog_cron
+features[elysia_cron][] = dc_birthday_notice_cron
+features[elysia_cron][] = node_cron
+features[features_api][] = api:2

@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Feature Module Elysia Cron feature.
+ */
+
+include_once 'feature_module_elysia_cron.features.inc';
