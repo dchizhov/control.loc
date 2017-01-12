@@ -48,6 +48,7 @@
             $time_difference_in_seconds = ai_time_difference_convert_time_difference_to_seconds($time_difference);
             $approximate_time_in_seconds = __dc_convert_to_seconds_DD_HH_MM_SS($approximate_time);
             $time_difference = $time_difference->format('%D:%H:%I:%S');
+            $delay_time = $approximate_time_in_seconds - $time_difference_in_seconds;
 
             if ($row_classes[$row_count]) {
                 if ($time_difference > $approximate_time) {
@@ -71,7 +72,14 @@
             <td <?php if ($field_classes[$field][$row_count]) {
                 print 'class="' . $field_classes[$field][$row_count] . '" ';
             } ?><?php print drupal_attributes($field_attributes[$field][$row_count]); ?>>
-                <?php print $content; ?>
+                <?php
+                if ($field == 'field_delay_time' && isset($delay_time) && $delay_time < 0) {
+                    print ai_employees_list_convert_second_to_time_format(abs($delay_time));
+                }
+                else {
+                    print $content;
+                }
+                ?>
             </td>
         <?php endforeach; ?>
         </tr>
