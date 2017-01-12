@@ -1,8 +1,10 @@
 (function ($) {
-    Drupal.ajax.prototype.commands.dc_autocomplete_assigned_tasks_title_change_title = function (ajax, response, status) {
-        var valFieldNidTask = $('.field_nid_task option:selected').text();
-        var val_field_nid_employee = $('.field-name-field-nid-employee option:selected').text();
-        
-        $('.title').val(val_field_nid_employee +' ' + valFieldNidTask);
+    Drupal.behaviors.dc_autocomplete_assigned_behaviors = {
+        attach: function (context, settings) {
+            var name_employee = jQuery('.field_nid_employee option:selected').text();
+            var name_task = jQuery('.field_nid_task option:selected').text();
+
+            jQuery('input.title').val(name_employee + ' - ' + name_task);
+        }
     };
 }(jQuery));
