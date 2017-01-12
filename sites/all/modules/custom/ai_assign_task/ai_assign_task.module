@@ -37,6 +37,7 @@ function ai_assign_task_form_alter(&$form, &$form_state, $form_id) {
       'field_date_of_completion',
       'field_spent_time',
       'field_spent_time_in_seconds',
+      'field_delay_time',
     );
 
     __ai_assign_task_set_access_false($form, $hidden_fields);

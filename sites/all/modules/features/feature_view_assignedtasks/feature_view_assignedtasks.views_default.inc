@@ -25,7 +25,10 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['title'] = 'Assigned Tasks';
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    3 => '3',
+  );
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
@@ -223,6 +226,11 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['fields']['field_status']['alter']['text'] = '<span class="assigned-task-status" data-nid="[nid]">[field_status]</span>';
   $handler->display->display_options['fields']['field_status']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_status']['type'] = 'taxonomy_term_reference_plain';
+  /* Field: Content: Delay time */
+  $handler->display->display_options['fields']['field_delay_time']['id'] = 'field_delay_time';
+  $handler->display->display_options['fields']['field_delay_time']['table'] = 'field_data_field_delay_time';
+  $handler->display->display_options['fields']['field_delay_time']['field'] = 'field_delay_time';
+  $handler->display->display_options['fields']['field_delay_time']['element_label_colon'] = FALSE;
   /* Field: Global: Custom text */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
@@ -699,6 +707,11 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['fields']['field_status']['alter']['text'] = '<span class="assigned-task-status" data-nid="[nid]">[field_status]</span>';
   $handler->display->display_options['fields']['field_status']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_status']['type'] = 'taxonomy_term_reference_plain';
+  /* Field: Content: Delay time */
+  $handler->display->display_options['fields']['field_delay_time']['id'] = 'field_delay_time';
+  $handler->display->display_options['fields']['field_delay_time']['table'] = 'field_data_field_delay_time';
+  $handler->display->display_options['fields']['field_delay_time']['field'] = 'field_delay_time';
+  $handler->display->display_options['fields']['field_delay_time']['element_label_colon'] = FALSE;
   /* Field: Global: Custom text */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
