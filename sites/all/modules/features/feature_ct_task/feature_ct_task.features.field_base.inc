@@ -71,6 +71,42 @@ function feature_ct_task_field_default_field_bases() {
     'type' => 'text_long',
   );
 
+  // Exported field_base: 'field_section_task'.
+  $field_bases['field_section_task'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_section_task',
+    'indexes' => array(
+      'target_id' => array(
+        0 => 'target_id',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'entityreference',
+    'settings' => array(
+      'behaviors' => array(),
+      'handler' => 'base',
+      'handler_settings' => array(
+        'behaviors' => array(
+          'views-select-list' => array(
+            'status' => 0,
+          ),
+        ),
+        'sort' => array(
+          'type' => 'none',
+        ),
+        'target_bundles' => array(
+          'sections' => 'sections',
+        ),
+      ),
+      'target_type' => 'taxonomy_term',
+    ),
+    'translatable' => 0,
+    'type' => 'entityreference',
+  );
+
   // Exported field_base: 'field_task_tags'.
   $field_bases['field_task_tags'] = array(
     'active' => 1,
@@ -121,6 +157,7 @@ function feature_ct_task_field_default_field_bases() {
     'locked' => 0,
     'module' => 'entityreference',
     'settings' => array(
+      'behaviors' => array(),
       'handler' => 'base',
       'handler_settings' => array(
         'behaviors' => array(

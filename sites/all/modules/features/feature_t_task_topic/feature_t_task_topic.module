@@ -1,5 +1,7 @@
 <?php
 /**
  * @file
- * Drupal needs this blank file.
+ * Code for the Feature T Task Topic feature.
  */
+
+include_once 'feature_t_task_topic.features.inc';
