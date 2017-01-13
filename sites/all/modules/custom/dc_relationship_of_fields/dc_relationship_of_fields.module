@@ -32,9 +32,21 @@ function dc_relationship_of_fields_form_alter(&$form, &$form_state, $form_id) {
  * Implements hook_update_N().
  */
 function dc_relationship_of_fields_update_7100(&$sandbox) {
-  $vocabulary = taxonomy_vocabulary_machine_name_load('task_topic');
+  $vocabulary_sections = taxonomy_vocabulary_machine_name_load('sections');
+
+  $term_drupal_7 = new stdClass();
+  $term_drupal_7->name = 'Drupal 7';
+  $term_drupal_7->vid = $vocabulary_sections->vid;
+  taxonomy_term_save($term_drupal_7);
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function dc_relationship_of_fields_update_7101(&$sandbox) {
+  $vocabulary_task_topic = taxonomy_vocabulary_machine_name_load('task_topic');
   $term_drupal_7 = array_shift(taxonomy_term_load_multiple(NULL, array('name' => 'Drupal 7')));
-  $topic_terms = taxonomy_term_load_multiple(NULL, array('vid' => $vocabulary->vid));
+  $topic_terms = taxonomy_term_load_multiple(NULL, array('vid' => $vocabulary_task_topic->vid));
 
   foreach ($topic_terms as $topic_term) {
     $topic_term->field_section['und'][0]['target_id'] = $term_drupal_7->tid;
@@ -42,6 +54,9 @@ function dc_relationship_of_fields_update_7100(&$sandbox) {
   }
 }
 
+/**
+ * Return select options of topics relations with sections.
+ */
 function dc_relationship_of_fields_get_topics_options($tid_section) {
   $vocabulary = taxonomy_vocabulary_machine_name_load('task_topic');
 
@@ -63,6 +78,9 @@ function dc_relationship_of_fields_get_topics_options($tid_section) {
   return $options;
 }
 
+/**
+ * Return form field_task_topic
+ */
 function dc_relationship_of_fields_task_topic_form($form, &$form_state) {
   return $form['field_task_topic'];
 }
