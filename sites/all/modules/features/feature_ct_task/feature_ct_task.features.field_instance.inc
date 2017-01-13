@@ -50,7 +50,7 @@ function feature_ct_task_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -94,7 +94,7 @@ function feature_ct_task_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 31,
+      'weight' => 7,
     ),
   );
 
@@ -134,6 +134,50 @@ function feature_ct_task_field_default_field_instances() {
       ),
       'type' => 'text_textarea',
       'weight' => 5,
+    ),
+  );
+
+  // Exported field_instance: 'node-tasks-field_section_task'.
+  $field_instances['node-tasks-field_section_task'] = array(
+    'bundle' => 'tasks',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 5,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_section_task',
+    'label' => 'Section',
+    'required' => 1,
+    'settings' => array(
+      'behaviors' => array(
+        'taxonomy-index' => array(
+          'status' => TRUE,
+        ),
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 0,
     ),
   );
 
@@ -211,7 +255,7 @@ function feature_ct_task_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_task_topic',
     'label' => 'Task topic',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'behaviors' => array(
         'taxonomy-index' => array(
@@ -225,7 +269,7 @@ function feature_ct_task_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 3,
+      'weight' => 1,
     ),
   );
 
@@ -235,6 +279,7 @@ function feature_ct_task_field_default_field_instances() {
   t('Body');
   t('Comment');
   t('Format DD:HH:MM:SS');
+  t('Section');
   t('Task tags');
   t('Task topic');
 
