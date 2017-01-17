@@ -15,6 +15,7 @@ function dc_relationship_of_fields_form_alter(&$form, &$form_state, $form_id) {
     );
     $form['field_task_topic'][LANGUAGE_NONE]['#prefix'] = '<div id="topic-list">';
     $form['field_task_topic'][LANGUAGE_NONE]['#suffix'] = '</div>';
+    $form['field_task_topic'][LANGUAGE_NONE]['#default_value'] = NULL;
 
     $tid_section = '';
     if (isset($form_state['values']['field_section_task'][LANGUAGE_NONE][0]['target_id'])) {
@@ -51,6 +52,32 @@ function dc_relationship_of_fields_update_7101(&$sandbox) {
   foreach ($topic_terms as $topic_term) {
     $topic_term->field_section['und'][0]['target_id'] = $term_drupal_7->tid;
     taxonomy_term_save($topic_term);
+  }
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function dc_relationship_of_fields_update_7106(&$sandbox) {
+  $term_drupal_7 = array_shift(taxonomy_term_load_multiple(NULL, array('name' => 'Drupal 7')));
+  $tasks_nodes = node_load_multiple(NULL, array('type' => 'tasks'));
+
+  foreach ($tasks_nodes as $tasks_node) {
+    $tasks_node->field_section_task[LANGUAGE_NONE][0]['target_id'] = $term_drupal_7->tid;
+    node_save($tasks_node);
+  }
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function dc_relationship_of_fields_update_7107(&$sandbox) {
+  $employees = node_load_multiple(NULL, array('type' => 'employees'));
+  $term_drupal_7 = array_shift(taxonomy_term_load_multiple(NULL, array('name' => 'Drupal 7')));
+
+  foreach ($employees as $employee) {
+    $employee->field_sections_employees[LANGUAGE_NONE][0]['target_id'] = $term_drupal_7->tid;
+    node_save($employee);
   }
 }
 
