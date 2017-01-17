@@ -13,29 +13,45 @@ define('AI_EMPLOYEES_LIST_SECONDS_IN_DAY', '86400');
 function ai_employees_list_get_list() {
   $employees_ids = array_keys(ai_employees_list_get_employees_or_tasks('employees'));
   $employees_nodes = node_load_multiple($employees_ids);
-  $all_tasks = count(ai_employees_list_get_employees_or_tasks('tasks'));
+
+  $sections_vocabulary = taxonomy_vocabulary_machine_name_load('sections');
+  $sections = taxonomy_term_load_multiple(NULL, array('vid' => $sections_vocabulary->vid));
+
   $employees_list = array();
   foreach ($employees_nodes as $employee_node) {
-    $done = ai_employees_list_get_tasks_quantity($employee_node->nid, DC_CHANGER_TASK_STATUS_DONE);
-    $in_progress = ai_employees_list_get_tasks_quantity($employee_node->nid, DC_CHANGER_TASK_STATUS_IN_PROGRESS);
-    $spent_time = ai_employees_list_get_spent_time_list($employee_node->nid);
+    foreach ($sections as $section) {
+      if (isset($employee_node->field_sections_employees[LANGUAGE_NONE])) {
+        foreach ($employee_node->field_sections_employees[LANGUAGE_NONE] as $field_sections_employee) {
+          if ($section->tid == $field_sections_employee['target_id']) {
+            $count_tasks = _ai_employees_list_get_count_tasks_by_section_id($section->tid);
+            $done = _ai_employees_list_get_tasks_quantity($employee_node->nid, DC_CHANGER_TASK_STATUS_DONE, $section->tid);
+            $in_progress = _ai_employees_list_get_tasks_quantity($employee_node->nid, DC_CHANGER_TASK_STATUS_IN_PROGRESS, $section->tid);
+            $spent_time = ai_employees_list_get_spent_time_list($employee_node->nid);
 
-    $employees_list[] = array(
-      'status' => $employee_node->status,
-      'name' => l(check_plain($employee_node->title), 'node/' . $employee_node->nid, array()),
-      'done' => $done,
-      'in_progress' => $in_progress,
-      'all' => $all_tasks,
-      'percentage' => !empty($all_tasks) ? number_format($done * 100 / $all_tasks) : 0,
-      'spent_time' => $spent_time['time'],
-    );
+            $employees_list[$employee_node->nid][] = array(
+              'nid' => $employee_node->nid,
+              'name_section' => $section->name,
+              'status' => $employee_node->status,
+              'name' => l(check_plain($employee_node->title), 'node/' . $employee_node->nid, array()),
+              'done' => $done,
+              'in_progress' => $in_progress,
+              'all' => $count_tasks,
+              'percentage' => !empty($count_tasks) ? number_format($done * 100 / $count_tasks) : 0,
+              'spent_time' => $spent_time['time'],
+            );
+          }
+        }
+      }
+    }
   }
+  
+//  Сортировку надо будет починить
 
-  $default_sort_criterion = array();
-  foreach ($employees_list as $list) {
-    $default_sort_criterion[] = $list['done'];
-  }
-  array_multisort($default_sort_criterion, SORT_DESC, $employees_list);
+//  $default_sort_criterion = array();
+//  foreach ($employees_list as $key => $list) {
+//    $default_sort_criterion[] = $list['done'];
+//  }
+//  array_multisort($default_sort_criterion, SORT_DESC, $employees_list);
 
   return $employees_list;
 }
@@ -117,23 +133,39 @@ function ai_employees_list_get_employees_or_tasks($type) {
 }
 
 /**
+ *
+ */
+function _ai_employees_list_get_count_tasks_by_section_id($section_id) {
+  $query = db_select('node', 'n');
+  $query->innerJoin('field_data_field_section_task', 'fdfst', 'n.nid = fdfst.entity_id');
+  $query->condition('type', 'tasks');
+  $query->condition('fdfst.field_section_task_target_id', $section_id);
+  $query->addExpression('COUNT(*)');
+  $result = $query->execute()->fetchField();
+
+  return $result;
+}
+
+/**
  * Function to get done or in progress tasks quantity depending on status.
  */
-function ai_employees_list_get_tasks_quantity($employee_id, $status) {
-  $query = new EntityFieldQuery();
-  $query->entityCondition('entity_type', 'node');
-  $query->propertyCondition('type', 'assigned_tasks');
-  $query->fieldCondition('field_nid_employee', 'target_id', $employee_id);
-  $query->fieldCondition('field_status', 'tid', $status);
-  $result = $query->execute();
+function _ai_employees_list_get_tasks_quantity($employee_id, $status, $section_id) {
+  $query = db_select('node', 'n');
 
-  if (!empty($result)) {
-    $quantity = $result['node'];
-  }
-  else {
-    $quantity = $result;
-  }
-  return count($quantity);
+  $query->innerJoin('field_data_field_nid_employee', 'fdfne', 'n.nid = fdfne.entity_id');
+  $query->innerJoin('field_data_field_status', 'fdfs', 'n.nid = fdfs.entity_id');
+  $query->innerJoin('field_data_field_nid_task', 'fdfnt', 'n.nid = fdfnt.entity_id');
+  $query->innerJoin('field_data_field_section_task', 'fdfst', 'fdfnt.field_nid_task_target_id = fdfst.entity_id');
+
+  $query->condition('type', 'assigned_tasks');
+  $query->condition('fdfne.field_nid_employee_target_id', $employee_id);
+  $query->condition('fdfs.field_status_tid', $status);
+  $query->condition('fdfst.field_section_task_target_id', $section_id);
+
+  $query->addExpression('COUNT(*)');
+  $result = $query->execute()->fetchField();
+
+  return $result;
 }
 
 /**
@@ -142,6 +174,7 @@ function ai_employees_list_get_tasks_quantity($employee_id, $status) {
 function ai_employees_list_prepare_list($lists) {
   $header = array(
     'Employee',
+    'Section',
     'In Progress',
     'Done',
     'Total',
@@ -150,17 +183,35 @@ function ai_employees_list_prepare_list($lists) {
   );
   $rows = array();
   foreach ($lists as $list) {
-    if ($list['status'] == 1) {
-      $rows[] = array(
-        'data' => array(
-          $list['name'],
-          check_plain($list['in_progress']),
-          check_plain($list['done']),
-          check_plain($list['all']),
-          theme('cool_progressbar', array('percentage' => check_plain($list['percentage']))),
-          check_plain($list['spent_time']),
-        ),
-      );
+    foreach ($list as $param) {
+      if ($param['status'] == 1) {
+        if (!isset($rows[$param['nid']])) {
+          $rows[$param['nid']] = array(
+            'data' => array(
+              'name' => $param['name'],
+              'name_section' => $param['name_section'],
+              'in_progress' => check_plain($param['in_progress']),
+              'done' => check_plain($param['done']),
+              'all' => check_plain($param['all']),
+              'cool_progressbar' => theme('cool_progressbar', array('percentage' => check_plain($param['percentage']))),
+              'spent_time' => check_plain($param['spent_time']),
+            ),
+          );
+        }
+        else {
+          $rows[$param['nid']] = array(
+            'data' => array(
+              'name' => $param['name'],
+              'name_section' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['name_section'].'</div>' . check_plain($param['name_section']),
+              'in_progress' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['in_progress'] . '</div>' . check_plain($param['in_progress']),
+              'done' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['done'] . '</div>' . check_plain($param['done']),
+              'all' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['all'] . '</div>' . check_plain($param['all']),
+              'cool_progressbar' => $rows[$param['nid']]['data']['cool_progressbar'] . theme('cool_progressbar', array('percentage' => check_plain($param['percentage']))),
+              'spent_time' => check_plain($param['spent_time']),
+            ),
+          );
+        }
+      }
     }
   }
   $table_settings = array('header' => $header, 'rows' => $rows);
@@ -173,6 +224,7 @@ function ai_employees_list_prepare_list($lists) {
 function ai_employees_list_prepare_list_who_leave($lists) {
   $header = array(
     'Employee',
+    'Section',
     'Done',
     'Total',
     'Employee\'s progress',
@@ -180,16 +232,33 @@ function ai_employees_list_prepare_list_who_leave($lists) {
   );
   $rows = array();
   foreach ($lists as $list) {
-    if ($list['status'] != 1) {
-      $rows[] = array(
-        'data' => array(
-          $list['name'],
-          check_plain($list['done']),
-          check_plain($list['all']),
-          theme('cool_progressbar', array('percentage' => check_plain($list['percentage']))),
-          check_plain($list['spent_time']),
-        ),
-      );
+    foreach ($list as $param) {
+      if ($param['status'] == 1) {
+        if (!isset($rows[$param['nid']])) {
+          $rows[$param['nid']] = array(
+            'data' => array(
+              'name' => $param['name'],
+              'name_section' => $param['name_section'],
+              'done' => check_plain($param['done']),
+              'all' => check_plain($param['all']),
+              'cool_progressbar' => theme('cool_progressbar', array('percentage' => check_plain($param['percentage']))),
+              'spent_time' => check_plain($param['spent_time']),
+            ),
+          );
+        }
+        else {
+          $rows[$param['nid']] = array(
+            'data' => array(
+              'name' => $param['name'],
+              'name_section' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['name_section'].'</div>' . check_plain($param['name_section']),
+              'done' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['done'] . '</div>' . check_plain($param['done']),
+              'all' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['all'] . '</div>' . check_plain($param['all']),
+              'cool_progressbar' => $rows[$param['nid']]['data']['cool_progressbar'] . theme('cool_progressbar', array('percentage' => check_plain($param['percentage']))),
+              'spent_time' => check_plain($param['spent_time']),
+            ),
+          );
+        }
+      }
     }
   }
   $table_settings = array('header' => $header, 'rows' => $rows);
