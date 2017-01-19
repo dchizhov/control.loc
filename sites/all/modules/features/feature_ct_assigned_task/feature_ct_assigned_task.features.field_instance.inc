@@ -46,7 +46,7 @@ function feature_ct_assigned_task_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 4,
+      'weight' => 6,
     ),
   );
 
@@ -90,7 +90,7 @@ function feature_ct_assigned_task_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 8,
+      'weight' => 10,
     ),
   );
 
@@ -168,6 +168,50 @@ function feature_ct_assigned_task_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
+      'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance: 'node-assigned_tasks-field_section_at'.
+  $field_instances['node-assigned_tasks-field_section_at'] = array(
+    'bundle' => 'assigned_tasks',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 7,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_section_at',
+    'label' => 'Section',
+    'required' => 1,
+    'settings' => array(
+      'behaviors' => array(
+        'taxonomy-index' => array(
+          'status' => TRUE,
+        ),
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
       'weight' => 1,
     ),
   );
@@ -208,7 +252,7 @@ function feature_ct_assigned_task_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 8,
     ),
   );
 
@@ -248,7 +292,7 @@ function feature_ct_assigned_task_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 9,
     ),
   );
 
@@ -289,7 +333,51 @@ function feature_ct_assigned_task_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 3,
+      'weight' => 5,
+    ),
+  );
+
+  // Exported field_instance: 'node-assigned_tasks-field_topic_at'.
+  $field_instances['node-assigned_tasks-field_topic_at'] = array(
+    'bundle' => 'assigned_tasks',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 8,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_topic_at',
+    'label' => 'Topic',
+    'required' => 1,
+    'settings' => array(
+      'behaviors' => array(
+        'taxonomy-index' => array(
+          'status' => TRUE,
+        ),
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 2,
     ),
   );
 
@@ -298,10 +386,12 @@ function feature_ct_assigned_task_field_default_field_instances() {
   t('Date of completion');
   t('Delay time');
   t('Employee');
+  t('Section');
   t('Spent Time');
   t('Spent time in seconds');
   t('Status');
   t('Task');
+  t('Topic');
 
   return $field_instances;
 }

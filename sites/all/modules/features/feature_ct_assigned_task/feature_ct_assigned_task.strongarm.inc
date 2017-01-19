@@ -68,10 +68,10 @@ function feature_ct_assigned_task_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '2',
+          'weight' => '4',
         ),
         'path' => array(
-          'weight' => '5',
+          'weight' => '7',
         ),
       ),
       'display' => array(),

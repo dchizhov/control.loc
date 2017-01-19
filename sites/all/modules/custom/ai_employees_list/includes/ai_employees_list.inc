@@ -45,14 +45,6 @@ function ai_employees_list_get_list() {
     }
   }
   
-//  Сортировку надо будет починить
-
-//  $default_sort_criterion = array();
-//  foreach ($employees_list as $key => $list) {
-//    $default_sort_criterion[] = $list['done'];
-//  }
-//  array_multisort($default_sort_criterion, SORT_DESC, $employees_list);
-
   return $employees_list;
 }
 
@@ -202,7 +194,7 @@ function ai_employees_list_prepare_list($lists) {
           $rows[$param['nid']] = array(
             'data' => array(
               'name' => $param['name'],
-              'name_section' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['name_section'].'</div>' . check_plain($param['name_section']),
+              'name_section' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['name_section'] . '</div>' . check_plain($param['name_section']),
               'in_progress' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['in_progress'] . '</div>' . check_plain($param['in_progress']),
               'done' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['done'] . '</div>' . check_plain($param['done']),
               'all' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['all'] . '</div>' . check_plain($param['all']),
@@ -233,7 +225,7 @@ function ai_employees_list_prepare_list_who_leave($lists) {
   $rows = array();
   foreach ($lists as $list) {
     foreach ($list as $param) {
-      if ($param['status'] == 1) {
+      if ($param['status'] != 1) {
         if (!isset($rows[$param['nid']])) {
           $rows[$param['nid']] = array(
             'data' => array(
@@ -250,7 +242,7 @@ function ai_employees_list_prepare_list_who_leave($lists) {
           $rows[$param['nid']] = array(
             'data' => array(
               'name' => $param['name'],
-              'name_section' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['name_section'].'</div>' . check_plain($param['name_section']),
+              'name_section' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['name_section'] . '</div>' . check_plain($param['name_section']),
               'done' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['done'] . '</div>' . check_plain($param['done']),
               'all' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['all'] . '</div>' . check_plain($param['all']),
               'cool_progressbar' => $rows[$param['nid']]['data']['cool_progressbar'] . theme('cool_progressbar', array('percentage' => check_plain($param['percentage']))),
