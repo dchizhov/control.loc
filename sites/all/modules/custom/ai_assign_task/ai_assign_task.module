@@ -26,40 +26,43 @@ function ai_assign_task_menu() {
  * Implements hook_form_alter().
  */
 function ai_assign_task_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == "assigned_tasks_node_form" && isset($form_state['build_info']['args']['short'])) {
+  if ($form_id == "assigned_tasks_node_form") {
+    if (isset($form_state['build_info']['args']['short'])) {
+      $task_id = arg(2);
 
-    $task_id = arg(2);
+      $form['field_nid_task'][LANGUAGE_NONE]['#default_value'] = $task_id;
+      $form['field_nid_employee'][LANGUAGE_NONE]['#ajax'] = FALSE;
+      $form['field_nid_task'][LANGUAGE_NONE]['#ajax'] = array(
+        'callback' => 'ai_assign_task_employees_list_callback',
+        'wrapper' => 'employee-list',
+      );
+
+      $employees = ai_assign_task_get_employees($task_id);
+
+      if (!empty($employees)) {
+        $form['field_nid_employee'][LANGUAGE_NONE]['#options'] = $employees;
+        $form['field_nid_employee'][LANGUAGE_NONE]['#prefix'] = '<div id="employee-list">';
+        $form['field_nid_employee'][LANGUAGE_NONE]['#suffix'] = '</div>';
+      }
+      else {
+        $form['field_nid_employee'][LANGUAGE_NONE]['#type'] = 'item';
+        $form['field_nid_employee'][LANGUAGE_NONE]['#markup'] = 'There are no available employees.';
+      }
+
+      $hidden_fields = array(
+        'field_date_of_completion',
+        'field_spent_time',
+        'field_spent_time_in_seconds',
+        'field_delay_time',
+        'field_topic_at',
+        'field_section_at',
+      );
+      __ai_assign_task_set_access_false($form, $hidden_fields);
+    }
+
     // Hide settings for modal window form.
     $form['additional_settings']['#prefix'] = '<div style="display:none;">';
     $form['additional_settings']['#suffix'] = '</div>';
-
-    $hidden_fields = array(
-      'field_date_of_completion',
-      'field_spent_time',
-      'field_spent_time_in_seconds',
-      'field_delay_time',
-    );
-
-    __ai_assign_task_set_access_false($form, $hidden_fields);
-
-    $form['field_nid_task'][LANGUAGE_NONE]['#default_value'] = $task_id;
-    $form['field_nid_employee'][LANGUAGE_NONE]['#ajax'] = FALSE;
-    $form['field_nid_task'][LANGUAGE_NONE]['#ajax'] = array(
-      'callback' => 'ai_assign_task_employees_list_callback',
-      'wrapper' => 'employee-list',
-    );
-
-    $employees = ai_assign_task_get_employees($task_id);
-
-    if (!empty($employees)) {
-      $form['field_nid_employee'][LANGUAGE_NONE]['#options'] = $employees;
-      $form['field_nid_employee'][LANGUAGE_NONE]['#prefix'] = '<div id="employee-list">';
-      $form['field_nid_employee'][LANGUAGE_NONE]['#suffix'] = '</div>';
-    }
-    else {
-      $form['field_nid_employee'][LANGUAGE_NONE]['#type'] = 'item';
-      $form['field_nid_employee'][LANGUAGE_NONE]['#markup'] = 'There are no available employees.';
-    }
   }
 }
 

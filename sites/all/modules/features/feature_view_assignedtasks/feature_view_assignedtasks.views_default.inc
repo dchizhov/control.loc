@@ -372,7 +372,8 @@ function feature_view_assignedtasks_views_default_views() {
   /* Display: Tasks are done */
   $handler = $view->new_display('block', 'Tasks are done', 'block_2');
   $handler->display->display_options['defaults']['title'] = FALSE;
-  $handler->display->display_options['title'] = 'Tasks is done';
+  $handler->display->display_options['title'] = 'Tasks are done';
+  $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['style_options']['grouping'] = array(
