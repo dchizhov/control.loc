@@ -236,10 +236,17 @@ function feature_view_assignedtasks_views_default_views() {
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<a href="change-status/ajax/[nid]" class="use-ajax control-actions-link" data-nid="[nid]">Completed</a>';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<a href="change-status/ajax/[nid]/done" class="use-ajax control-actions-link" data-nid="[nid]">Done</a>';
   $handler->display->display_options['fields']['nothing']['alter']['path'] = 'change-status/ajax/[nid]';
   $handler->display->display_options['fields']['nothing']['alter']['link_class'] = 'use-ajax';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+  $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_1']['label'] = '';
+  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = '<a href="change-status/ajax/[nid]/not-done" class="use-ajax control-actions-link" data-nid="[nid]"> Not Done</a>';
+  $handler->display->display_options['fields']['nothing_1']['element_label_colon'] = FALSE;
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';

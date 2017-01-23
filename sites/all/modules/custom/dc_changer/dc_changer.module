@@ -14,16 +14,16 @@ define('DC_CHANGER_TASK_STATUS_IN_PROGRESS', '2');
 function dc_changer_menu() {
   drupal_add_library('system', 'drupal.ajax');
 
-  $items['change-status/nojs/%'] = array(
+  $items['change-status/nojs/%/%'] = array(
     'page callback' => '_dc_changer_update',
-    'page arguments' => array(1, 2),
+    'page arguments' => array(1, 2, 3),
     'access arguments' => array('permission name'),
     'type' => MENU_CALLBACK,
   );
 
-  $items['change-status/ajax/%'] = array(
+  $items['change-status/ajax/%/%'] = array(
       'delivery callback' => 'ajax_deliver',
-    ) + $items['change-status/nojs/%'];
+    ) + $items['change-status/nojs/%/%'];
 
   return $items;
 }
@@ -31,24 +31,65 @@ function dc_changer_menu() {
 /**
  * Function creates and returns ajax_commands to change status for assigned tasks.
  */
-function _dc_changer_update($ajax, $nid) {
+function _dc_changer_update($ajax, $nid, $change_status) {
+  $statuses = _dc_changer_get_statuses();
   $is_ajax = $ajax === 'ajax';
 
   $node = node_load($nid);
   $node->field_date_of_completion['und'][0]['value'] = time();
-  $node->field_status['und'][0]['tid'] = DC_CHANGER_TASK_STATUS_DONE;
-  node_save($node);
 
-  $target_status = taxonomy_term_load(DC_CHANGER_TASK_STATUS_DONE);
+  $node->field_status['und'][0]['tid'] = $statuses['status_not_done']->tid;
+  if ($change_status == 'done') {
+    $node->field_status['und'][0]['tid'] = $statuses['status_done']->tid;
+  }
+
+  node_save($node);
 
   if ($is_ajax) {
     $commands = array();
     $commands[] = ajax_command_remove(".control-actions-link[data-nid=$nid]");
-    $commands[] = ajax_command_html(".assigned-task-status[data-nid=$nid]", $target_status->name);
+    if ($change_status == 'done') {
+      $commands[] = ajax_command_html(".assigned-task-status[data-nid=$nid]", $statuses['status_done']->name);
+    }else {
+      $commands[] = ajax_command_html(".assigned-task-status[data-nid=$nid]", $statuses['status_not_done']->name);
+    }
     return array(
       '#type' => 'ajax',
       '#commands' => $commands,
     );
   }
+}
 
+/**
+ * Implements hook_update_N().
+ */
+function dc_changer_update_7111(&$sandbox) {
+  $vocabulary_statuses = taxonomy_vocabulary_machine_name_load('statuses');
+
+  $term = new stdClass();
+  $term->vid = $vocabulary_statuses->vid;
+  $term->name = 'Not done';
+  $term->description = "Status is set when employee didn't cope with task";
+
+  taxonomy_term_save($term);
+}
+
+function _dc_changer_get_statuses() {
+  $vocabulary_statuses = taxonomy_vocabulary_machine_name_load('statuses');
+  $statuses = taxonomy_term_load_multiple(NULL, array('vid' => $vocabulary_statuses->vid));
+
+  $statuses_array = array();
+  foreach ($statuses as $status) {
+    if ($status->name == 'Not done') {
+      $statuses_array['status_not_done'] = $status;
+    }
+    else if ($status->name == 'Done') {
+      $statuses_array['status_done'] = $status;
+    }
+    else {
+      $statuses_array['status_in_progress'] = $status;
+    }
+  }
+
+  return $statuses_array;
 }

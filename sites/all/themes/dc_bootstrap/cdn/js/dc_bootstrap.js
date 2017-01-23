@@ -3,6 +3,7 @@
         attach: function (context, settings) {
             jQuery('.assign_done .task_box_assign span').html('DONE');
             jQuery('.assign_in_progress .task_box_assign span').html('IN PROGRESS');
+            jQuery('.assign_not_done .task_box_assign span').html('NOT DONE');
             
             jQuery('.assigned .task_box_assign span a').on('click',function () {
                var parents = jQuery(this).parents();
