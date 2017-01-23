@@ -124,7 +124,12 @@
 }
 
 .assign_done:hover .task_box_title a {
-    color: #337ab7;
+    color: #66b35d;
+}
+
+.assign_done .task_box_title a:hover {
+    background-color: #66b35d;
+    color: #f8f055;
 }
 
 .assign_done:hover,.assign_not_done:hover {
@@ -138,4 +143,16 @@
     color: #f36b0d;
     background-color: #fff46a;
     cursor: default;
+}
+.assign_not_done .task_box_title a{
+    color: white;
+}
+
+.assign_not_done:hover .task_box_title a {
+    color: #b51e24;
+}
+
+.assign_not_done .task_box_title a:hover {
+    background-color: #b51e24;
+    color: white;
 }
