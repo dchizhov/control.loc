@@ -12,7 +12,7 @@
     font-size: 1.1em;
     border: 1px solid #319092;
     border-radius: 4%;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .notice .title {
@@ -34,4 +34,77 @@
     color: white;
     font-weight: bold;
     cursor: pointer;
+}
+
+.task_box_title {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.task_box_title a, .task_box_assign a, .assign_done .task_box_assign span {
+    transition: 0.5s;
+    padding: 2% 0;
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.task_box_title a:hover {
+    transition: 0.5s;
+    background-color: #ddd;
+}
+
+.task_box_body {
+    padding: 2% 2%;
+    text-align: center;
+}
+
+.task_box_assign {
+    text-align: center;
+}
+
+.task_box_assign a, .assign_done .task_box_assign span {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    font-weight: bold;
+    background-color: #ddd;
+}
+
+.task_box_assign a:hover {
+    background-color: #a3a3a3;
+    color: white;
+}
+
+.assigned {
+    padding: 0;
+    width: 23.4%;
+    margin-right: 15px;
+    height: 155px;
+}
+
+.assign_done {
+    background-color: #8ae880;
+    transition: 0.5s;
+    opacity: 0.5;
+}
+
+.assign_done .task_box_assign span {
+    background-color: #66b35d;
+    color: #f8f055;
+    cursor: default;
+}
+
+.assign_done .task_box_title a {
+    color: white;
+}
+
+.assign_done:hover .task_box_title a {
+    color: #337ab7;
+}
+
+.assign_done:hover {
+    background-color: white;
+    transition: 0.5s;
+    opacity: 1;
 }
