@@ -1,9 +1,11 @@
 name = Features User
-description = User settings 
+description = User settings
 core = 7.x
 package = Features User
-version = 7.x-1.00
+version = 7.x-1.01
 dependencies[] = entityreference
 dependencies[] = features
+dependencies[] = options
 features[features_api][] = api:2
 features[field_base][] = field_sections_user
+features[field_instance][] = user-user-field_sections_user
