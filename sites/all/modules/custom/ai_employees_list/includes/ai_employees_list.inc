@@ -11,8 +11,7 @@ define('AI_EMPLOYEES_LIST_SECONDS_IN_DAY', '86400');
  * Function to get employees list with tasks statistics.
  */
 function ai_employees_list_get_list() {
-  $employees_ids = array_keys(ai_employees_list_get_employees_or_tasks('employees'));
-  $employees_nodes = node_load_multiple($employees_ids);
+  $employees_nodes = node_load_multiple(_ai_employees_list_get_nid_employees_by_user_sections());
 
   $sections_vocabulary = taxonomy_vocabulary_machine_name_load('sections');
   $sections = taxonomy_term_load_multiple(NULL, array('vid' => $sections_vocabulary->vid));
@@ -44,7 +43,7 @@ function ai_employees_list_get_list() {
       }
     }
   }
-  
+
   return $employees_list;
 }
 
@@ -120,8 +119,45 @@ function ai_employees_list_get_employees_or_tasks($type) {
   $query->entityCondition('entity_type', 'node');
   $query->propertyCondition('type', $type);
   $result = $query->execute();
-
   return $result['node'];
+}
+
+function _ai_employees_list_get_nid_employees_by_user_sections() {
+  $user_sections = _ai_employees_list_get_user_sections();
+
+  $query = db_select('node', 'n');
+  $query->fields('n', array('nid'));
+  $query->fields('fdfse', array('field_sections_employees_target_id'));
+  $query->condition('type', 'employees');
+  $query->innerJoin('field_data_field_sections_employees', 'fdfse', 'n.nid = fdfse.entity_id');
+  $result = $query->execute()->fetchAll();
+
+  $nid_employees= array();
+  foreach ($result as $item) {
+    foreach ($user_sections as $user_section) {
+      if ($item->field_sections_employees_target_id == $user_section->tid) {
+        $nid_employees[$item->nid] = $item->nid;
+      }
+    }
+  }
+  return $nid_employees;
+}
+
+function _ai_employees_list_get_user_sections() {
+  global $user;
+
+  $query = db_select('taxonomy_term_data', 'ttd');
+  $query->fields('ttd', array('tid'));
+  $query->innerJoin('field_data_field_sections_user', 'fdfsu', 'ttd.tid = fdfsu.field_sections_user_target_id');
+  $query->condition('fdfsu.entity_id', $user->uid);
+  $tid_sections = $query->execute()->fetchAll();
+
+  $user_sections = array();
+  foreach ($tid_sections as $tid_section) {
+    $user_sections[] = taxonomy_term_load($tid_section->tid);
+  }
+
+  return $user_sections;
 }
 
 /**

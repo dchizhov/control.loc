@@ -11,6 +11,8 @@ require_once DRUPAL_ROOT . "/modules/node/node.pages.inc";
  * Implements hook_menu().
  */
 function ai_assign_task_menu() {
+  drupal_add_library('system', 'drupal.ajax');
+
   $items['all_tasks/%ctools_js/%'] = array(
     'title' => 'Assign task',
     'page arguments' => array(1, 2),
@@ -19,6 +21,18 @@ function ai_assign_task_menu() {
     'delivery callback' => 'ajax_deliver',
     'type' => MENU_CALLBACK,
   );
+
+  $items['assign-task/nojs/node/%/%'] = array(
+    'page callback' => '_ai_assign_task_assign_task',
+    'page arguments' => array(1, 2, 3, 4),
+    'access arguments' => array('permission name'),
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['assign-task/ajax/node/%/%'] = array(
+      'delivery callback' => 'ajax_deliver',
+    ) + $items['assign-task/nojs/node/%/%'];
+
   return $items;
 }
 
@@ -75,5 +89,38 @@ function ai_assign_task_form_alter(&$form, &$form_state, $form_id) {
 function __ai_assign_task_set_access_false(&$form, array $fields) {
   foreach ($fields as $field) {
     $form[$field]['#access'] = FALSE;
+  }
+}
+
+/**
+ *
+ */
+function _ai_assign_task_assign_task($ajax, $type, $nid_employee, $nid_task) {
+  global $user;
+
+  $is_ajax = $ajax === 'ajax';
+  $task = node_load($nid_task);
+  $employee = node_load($nid_employee);
+
+  $node = new stdClass();
+  $node->title = $employee->title.' - '.$task->title;
+  $node->type = 'assigned_tasks';
+  node_object_prepare($node);
+  $node->language = LANGUAGE_NONE;
+  $node->uid = $user->uid;
+  $node->status = 1;
+  $node->field_nid_task['und'][0]['target_id'] = $task->nid;
+  $node->field_nid_employee['und'][0]['target_id'] = $employee->nid;
+  $node->field_status['und'][0]['tid'] = 2;
+
+  node_save($node);
+
+  if ($is_ajax) {
+    $commands = array();
+
+    return array(
+      '#type' => 'ajax',
+      '#commands' => $commands,
+    );
   }
 }
