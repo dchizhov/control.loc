@@ -41,7 +41,7 @@
     font-size: 1.2em;
 }
 
-.task_box_title a, .task_box_assign a, .assign_done .task_box_assign span {
+.task_box_title a, .task_box_assign a, .assign_done .task_box_assign span, .assign_in_progress .task_box_assign span{
     transition: 0.5s;
     padding: 2% 0;
     display: block;
@@ -63,7 +63,7 @@
     text-align: center;
 }
 
-.task_box_assign a, .assign_done .task_box_assign span {
+.task_box_assign a, .assign_done .task_box_assign span, .assign_in_progress .task_box_assign span{
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -89,6 +89,18 @@
     opacity: 0.5;
 }
 
+.assign_in_progress {
+    background-color: #fffea1;
+}
+
+.assign_in_progress .task_box_title a:hover {
+    background-color: #fff46a;
+}
+
+.assign_in_progress .task_box_title a {
+    color: #f36b0d;
+}
+
 .assign_done .task_box_assign span {
     background-color: #66b35d;
     color: #f8f055;
@@ -107,4 +119,11 @@
     background-color: white;
     transition: 0.5s;
     opacity: 1;
+}
+
+.assign_in_progress .task_box_assign span{
+    left: 0;
+    color: #f36b0d;
+    background-color: #fff46a;
+    cursor: default;
 }
