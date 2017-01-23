@@ -31,7 +31,7 @@ function ai_assign_task_menu() {
 
   $items['assign-task/ajax/node/%/%'] = array(
       'delivery callback' => 'ajax_deliver',
-    ) + $items['assign-task/nojs/%'];
+    ) + $items['assign-task/nojs/node/%/%'];
 
   return $items;
 }

@@ -3,7 +3,7 @@
  * @file
  * feature_page_employees.pages_default.inc
  */
- 
+
 /**
  * Implements hook_default_page_manager_handlers().
  */
@@ -65,28 +65,25 @@ function feature_page_employees_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
   $pane = new stdClass();
-  $pane->pid = 'new-9abfb535-75b4-41a4-9933-a095c898d913';
+  $pane->pid = 'new-971b1749-1f38-4bef-bd9b-e3c94c46801b';
   $pane->panel = 'bottom';
   $pane->type = 'views';
-  $pane->subtype = 'pagetask';
+  $pane->subtype = 'all_tasks';
   $pane->shown = TRUE;
   $pane->access = array();
   $pane->configuration = array(
     'override_pager_settings' => 0,
     'use_pager' => 0,
-    'nodes_per_page' => '50',
+    'nodes_per_page' => '0',
     'pager_id' => '0',
     'offset' => '0',
     'more_link' => 0,
     'feed_icons' => 0,
     'panel_args' => 1,
     'link_to_view' => 0,
-    'args' => '',
+    'args' => '%node:nid',
     'url' => '',
-    'display' => 'block_2',
-    'context' => array(
-      0 => '',
-    ),
+    'display' => 'block_1',
     'override_title' => 0,
     'override_title_text' => '',
     'override_title_heading' => 'h2',
@@ -99,9 +96,9 @@ function feature_page_employees_default_page_manager_handlers() {
   $pane->extras = array();
   $pane->position = 0;
   $pane->locks = array();
-  $pane->uuid = '9abfb535-75b4-41a4-9933-a095c898d913';
-  $display->content['new-9abfb535-75b4-41a4-9933-a095c898d913'] = $pane;
-  $display->panels['bottom'][0] = 'new-9abfb535-75b4-41a4-9933-a095c898d913';
+  $pane->uuid = '971b1749-1f38-4bef-bd9b-e3c94c46801b';
+  $display->content['new-971b1749-1f38-4bef-bd9b-e3c94c46801b'] = $pane;
+  $display->panels['bottom'][0] = 'new-971b1749-1f38-4bef-bd9b-e3c94c46801b';
   $pane = new stdClass();
   $pane->pid = 'new-f8afa3f4-6b8d-4b24-8c49-d8e2e9bd1315';
   $pane->panel = 'top';
