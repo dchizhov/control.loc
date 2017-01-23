@@ -41,7 +41,7 @@
     font-size: 1.2em;
 }
 
-.task_box_title a, .task_box_assign a, .assign_done .task_box_assign span, .assign_in_progress .task_box_assign span{
+.task_box_title a, .task_box_assign a, .assign_done .task_box_assign span, .assign_in_progress .task_box_assign span, .assign_not_done .task_box_assign span{
     transition: 0.5s;
     padding: 2% 0;
     display: block;
@@ -63,7 +63,7 @@
     text-align: center;
 }
 
-.task_box_assign a, .assign_done .task_box_assign span, .assign_in_progress .task_box_assign span{
+.task_box_assign a, .assign_done .task_box_assign span, .assign_in_progress .task_box_assign span, .assign_not_done .task_box_assign span{
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -81,6 +81,12 @@
     width: 23.4%;
     margin-right: 15px;
     height: 155px;
+}
+
+.assign_not_done {
+    background-color: #ff2b32;
+    transition: 0.5s;
+    opacity: 0.5;
 }
 
 .assign_done {
@@ -107,6 +113,12 @@
     cursor: default;
 }
 
+.assign_not_done .task_box_assign span {
+    background-color: #b51e24;
+    color: white;
+    cursor: default;
+}
+
 .assign_done .task_box_title a {
     color: white;
 }
@@ -115,7 +127,7 @@
     color: #337ab7;
 }
 
-.assign_done:hover {
+.assign_done:hover,.assign_not_done:hover {
     background-color: white;
     transition: 0.5s;
     opacity: 1;
