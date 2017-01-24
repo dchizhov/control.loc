@@ -9,7 +9,7 @@
  */
 function dc_mailer_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'assigned_tasks_node_form') {
-    $form['#submit'][] = '_dc_mailer_send_email';
+    $form['#submit'][] = 'dc_mailer_send_email_submit';
   }
 }
 
@@ -31,12 +31,21 @@ function dc_mailer_mail($key, &$message, $params) {
 /**
  * Send email to employee
  */
-function _dc_mailer_send_email(&$form, &$form_state) {
+function dc_mailer_send_email_submit(&$form, &$form_state) {
   $employee = node_load($form_state['values']['field_nid_employee']['und'][0]['target_id']);
 
   if (isset($employee->field_email['und'][0]['value'])) {
     $params = _dc_mailer_get_params($form_state['values']['field_nid_task']['und'][0]['target_id']);
 
+    drupal_mail('dc_mailer', 'assigned_task', $employee->field_email['und'][0]['value'], language_default(), $params, 'alex.unlitsolutions@gmail.com', TRUE);
+  }
+}
+
+function _dc_mailer_send_email($nid_employee,$nid_task) {
+  $employee = node_load($nid_employee);
+
+  if (isset($employee->field_email['und'][0]['value'])) {
+    $params = _dc_mailer_get_params($nid_task);
     drupal_mail('dc_mailer', 'assigned_task', $employee->field_email['und'][0]['value'], language_default(), $params, 'alex.unlitsolutions@gmail.com', TRUE);
   }
 }

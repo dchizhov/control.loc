@@ -93,7 +93,7 @@ function __ai_assign_task_set_access_false(&$form, array $fields) {
 }
 
 /**
- *
+ * Creating assign task and send email to employee
  */
 function _ai_assign_task_assign_task($ajax, $type, $nid_employee, $nid_task) {
   global $user;
@@ -103,7 +103,7 @@ function _ai_assign_task_assign_task($ajax, $type, $nid_employee, $nid_task) {
   $employee = node_load($nid_employee);
 
   $node = new stdClass();
-  $node->title = $employee->title.' - '.$task->title;
+  $node->title = $employee->title . ' - ' . $task->title;
   $node->type = 'assigned_tasks';
   node_object_prepare($node);
   $node->language = LANGUAGE_NONE;
@@ -114,13 +114,5 @@ function _ai_assign_task_assign_task($ajax, $type, $nid_employee, $nid_task) {
   $node->field_status['und'][0]['tid'] = 2;
 
   node_save($node);
-
-  if ($is_ajax) {
-    $commands = array();
-
-    return array(
-      '#type' => 'ajax',
-      '#commands' => $commands,
-    );
-  }
+  _dc_mailer_send_email($nid_employee, $nid_task);
 }
