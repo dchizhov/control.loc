@@ -137,6 +137,48 @@ function feature_ct_task_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-tasks-field_file_task'.
+  $field_instances['node-tasks-field_file_task'] = array(
+    'bundle' => 'tasks',
+    'deleted' => 0,
+    'description' => 'Attach file if you need showing more information about a task for employee',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 6,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_file_task',
+    'label' => 'File',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'txt pdf doc odp',
+      'max_filesize' => '50 MB',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 8,
+    ),
+  );
+
   // Exported field_instance: 'node-tasks-field_section_task'.
   $field_instances['node-tasks-field_section_task'] = array(
     'bundle' => 'tasks',
@@ -276,8 +318,10 @@ function feature_ct_task_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Approximate time');
+  t('Attach file if you need showing more information about a task for employee');
   t('Body');
   t('Comment');
+  t('File');
   t('Format DD:HH:MM:SS');
   t('Section');
   t('Task tags');

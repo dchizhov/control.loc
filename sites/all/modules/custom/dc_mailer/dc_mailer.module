@@ -24,6 +24,7 @@ function dc_mailer_mail($key, &$message, $params) {
       $message['body'][] = t('Topic: ' . $params['topic']);
       $message['body'][] = t('Approximate time: ' . $params['approximate_time']);
       $message['body'][] = t($params['body']);
+      $message['params']['attachments'][] = $params['attached_file'];
       break;
   }
 }
@@ -41,7 +42,7 @@ function dc_mailer_send_email_submit(&$form, &$form_state) {
   }
 }
 
-function _dc_mailer_send_email($nid_employee,$nid_task) {
+function _dc_mailer_send_email($nid_employee, $nid_task) {
   $employee = node_load($nid_employee);
 
   if (isset($employee->field_email['und'][0]['value'])) {
@@ -66,6 +67,15 @@ function _dc_mailer_get_params($nid_task) {
   $params['approximate_time'] = 'N/A';
   if (isset($task->field_approximate_time['und'][0]['value'])) {
     $params['approximate_time'] = $task->field_approximate_time['und'][0]['value'];
+  }
+
+  $params['attached_file'] = '';
+  if (isset($task->field_file_task[LANGUAGE_NONE][0])) {
+    $params['attached_file'] = array(
+      'filecontent' => file_get_contents($task->field_file_task['und'][0]['uri']),
+      'filename' => $task->field_file_task['und'][0]['filename'],
+      'filemime' => $task->field_file_task['und'][0]['filemime'],
+    );
   }
 
   $params['title'] = $task->title;
