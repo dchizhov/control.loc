@@ -41,7 +41,7 @@
     font-size: 1.2em;
 }
 
-.task_box_title a, .task_box_assign a, .assign_done .task_box_assign span, .assign_in_progress .task_box_assign span, .assign_not_done .task_box_assign span{
+.task_box_title a, .task_box_assign a, .assign_done .task_box_assign span, .assign_in_progress .task_box_assign span, .assign_not_done .task_box_assign span {
     transition: 0.5s;
     padding: 2% 0;
     display: block;
@@ -63,7 +63,7 @@
     text-align: center;
 }
 
-.task_box_assign a, .assign_done .task_box_assign span, .assign_in_progress .task_box_assign span, .assign_not_done .task_box_assign span{
+.task_box_assign a, .assign_done .task_box_assign span, .assign_in_progress .task_box_assign span, .assign_not_done .task_box_assign span {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -132,19 +132,20 @@
     color: #f8f055;
 }
 
-.assign_done:hover,.assign_not_done:hover {
+.assign_done:hover, .assign_not_done:hover {
     background-color: white;
     transition: 0.5s;
     opacity: 1;
 }
 
-.assign_in_progress .task_box_assign span{
+.assign_in_progress .task_box_assign span {
     left: 0;
     color: #f36b0d;
     background-color: #fff46a;
     cursor: default;
 }
-.assign_not_done .task_box_title a{
+
+.assign_not_done .task_box_title a {
     color: white;
 }
 
@@ -155,4 +156,102 @@
 .assign_not_done .task_box_title a:hover {
     background-color: #b51e24;
     color: white;
+}
+
+div.table-responsive table > tbody > tr > td {
+    padding: 4px;
+}
+
+.table_assign_title a {
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+div.table-responsive table.views-table span.done {
+    font-weight: bold;
+    text-align: right;
+    display: block;
+}
+
+div.table-responsive table.views-table .table_assign_title {
+    font-weight: bold;
+    text-align: center;
+}
+
+div.table-responsive table.views-table tr.table_assign_done {
+    background-color: #8ae880;
+}
+
+div.table-responsive table.views-table tr.table_assign_done td {
+    border-top: 1px solid #53c24e;
+}
+
+div.table-responsive table.views-table tr.table_assign_done .table_assign_title a {
+    color: #197e00;
+}
+
+div.table-responsive table.views-table tr.table_assign_done .table_assign_title:hover {
+    background-color: #79d36f;
+}
+
+div.table-responsive table.views-table tr.table_assign_in_progress {
+    background-color: #fffea1;
+}
+
+div.table-responsive table.views-table tr.table_assign_in_progress td {
+    border-top: 1px solid #dcd64a;
+}
+
+div.table-responsive table.views-table tr.table_assign_in_progress .table_assign_title a {
+    color: #f36b0d;
+}
+
+div.table-responsive table.views-table tr.table_assign_in_progress .table_assign_title:hover {
+    background-color: #fff46a;
+    cursor: pointer;
+}
+
+div.table-responsive table.views-table tr.table_assign_not_done {
+    background-color: #e82a30;
+}
+
+div.table-responsive table.views-table tr.table_assign_not_done td {
+    border-top: 1px solid #b51e24;
+}
+
+div.table-responsive table.views-table tr.table_assign_not_done .table_assign_title a{
+    color: white;
+}
+
+div.table-responsive table.views-table tr.table_assign_not_done .table_assign_title:hover {
+    background-color: #a01c21;
+    cursor: pointer;
+}
+
+div.table-responsive table.views-table tr.table_assign_not_done .done {
+    color: white;
+}
+
+div.table-responsive table.views-table tr.table_assign_in_progress .table_assign_title, div.table-responsive table.views-table tr.table_assign_in_progress .table_assign_title:hover,
+div.table-responsive table.views-table tr.table_assign_done .table_assign_title,
+div.table-responsive table.views-table tr.table_assign_done .table_assign_title:hover,
+div.table-responsive table.views-table tr.table_assign_not_done .table_assign_title,
+div.table-responsive table.views-table tr.table_assign_not_done .table_assign_title:hover {
+    transition: 0.5s;
+}
+
+.modes {
+    margin-right: 10%;
+    text-align: right;
+}
+
+.list_mode, .table_mode {
+    font-size: 1.2em;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.list_mode:hover, .table_mode:hover {
+    color: #a01c21;
 }
