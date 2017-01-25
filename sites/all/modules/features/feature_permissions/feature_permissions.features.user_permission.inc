@@ -85,24 +85,6 @@ function feature_permissions_user_default_permissions() {
     'module' => 'devel',
   );
 
-  // Exported permission: 'access production check'.
-  $permissions['access production check'] = array(
-    'name' => 'access production check',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'prod_check',
-  );
-
-  // Exported permission: 'access production monitor'.
-  $permissions['access production monitor'] = array(
-    'name' => 'access production monitor',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'prod_monitor',
-  );
-
   // Exported permission: 'access rules debug'.
   $permissions['access rules debug'] = array(
     'name' => 'access rules debug',
@@ -110,15 +92,6 @@ function feature_permissions_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'rules',
-  );
-
-  // Exported permission: 'access security review list'.
-  $permissions['access security review list'] = array(
-    'name' => 'access security review list',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'security_review',
   );
 
   // Exported permission: 'access site in maintenance mode'.
@@ -407,15 +380,6 @@ function feature_permissions_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'user',
-  );
-
-  // Exported permission: 'administer production check'.
-  $permissions['administer production check'] = array(
-    'name' => 'administer production check',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'prod_check',
   );
 
   // Exported permission: 'administer rules'.
@@ -1065,15 +1029,6 @@ function feature_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: 'run security checks'.
-  $permissions['run security checks'] = array(
-    'name' => 'run security checks',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'security_review',
-  );
-
   // Exported permission: 'save file information'.
   $permissions['save file information'] = array(
     'name' => 'save file information',
@@ -1126,15 +1081,6 @@ function feature_permissions_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'shortcut',
-  );
-
-  // Exported permission: 'switch to production mode'.
-  $permissions['switch to production mode'] = array(
-    'name' => 'switch to production mode',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'prod_check',
   );
 
   // Exported permission: 'switch users'.
