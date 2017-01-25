@@ -25,7 +25,7 @@ function ai_assign_task_menu() {
   $items['assign-task/nojs/node/%/%'] = array(
     'page callback' => '_ai_assign_task_assign_task',
     'page arguments' => array(1, 2, 3, 4),
-    'access arguments' => array('permission name'),
+    'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
 

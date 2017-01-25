@@ -31,17 +31,21 @@ function ai_employees_list_block_info() {
 function ai_employees_list_block_view($delta = '') {
   $block = array();
 
-  $employees_list = ai_employees_list_get_list();
-
   switch ($delta) {
     case 'employee_list':
-      $block['subject'] = 'Employees list';
-      $block['content'] = theme('table', ai_employees_list_prepare_list($employees_list));
+      $employees_list = ai_employees_list_get_list();
+      if (!empty($employees_list)) {
+        $block['subject'] = 'Employees progress';
+        $block['content'] = theme('table', ai_employees_list_prepare_list($employees_list));
+      }
       break;
 
     case 'employee_list_not_active':
-      $block['subject'] = 'Employees list who fired from job';
-      $block['content'] = theme('table', ai_employees_list_prepare_list_who_leave($employees_list));
+      $fired_employees_list = ai_employees_list_get_list('fired');
+      if (!empty($fired_employees_list)) {
+        $block['subject'] = 'Fired employees progress';
+        $block['content'] = theme('table', ai_employees_list_prepare_list_who_leave($fired_employees_list));
+      }
       break;
 
     case 'tasks_list_download':
@@ -49,7 +53,6 @@ function ai_employees_list_block_view($delta = '') {
       $block['content'] = l(t('Download tasks list in doc format'), 'doc-file-download/');
       break;
   }
-
   return $block;
 }
 

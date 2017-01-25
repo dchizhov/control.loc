@@ -81,6 +81,7 @@
     width: 23.4%;
     margin-right: 15px;
     height: 155px;
+    overflow: hidden;
 }
 
 .assign_not_done {

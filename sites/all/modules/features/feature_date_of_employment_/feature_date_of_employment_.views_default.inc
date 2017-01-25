@@ -24,7 +24,10 @@ function feature_date_of_employment__views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Additional information about employees';
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    3 => '3',
+  );
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
@@ -145,14 +148,15 @@ function feature_date_of_employment__views_default_views() {
   $handler->display->display_options['sorts']['status']['table'] = 'node';
   $handler->display->display_options['sorts']['status']['field'] = 'status';
   $handler->display->display_options['sorts']['status']['order'] = 'DESC';
-  /* Contextual filter: Content: User posted or commented */
-  $handler->display->display_options['arguments']['uid_touch']['id'] = 'uid_touch';
-  $handler->display->display_options['arguments']['uid_touch']['table'] = 'node';
-  $handler->display->display_options['arguments']['uid_touch']['field'] = 'uid_touch';
-  $handler->display->display_options['arguments']['uid_touch']['default_argument_type'] = 'fixed';
-  $handler->display->display_options['arguments']['uid_touch']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['uid_touch']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['uid_touch']['summary_options']['items_per_page'] = '25';
+  /* Contextual filter: Content: Author uid */
+  $handler->display->display_options['arguments']['uid']['id'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['table'] = 'node';
+  $handler->display->display_options['arguments']['uid']['field'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['uid']['default_argument_type'] = 'current_user';
+  $handler->display->display_options['arguments']['uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
   /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';

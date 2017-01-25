@@ -17,7 +17,7 @@ function dc_changer_menu() {
   $items['change-status/nojs/%/%'] = array(
     'page callback' => '_dc_changer_update',
     'page arguments' => array(1, 2, 3),
-    'access arguments' => array('permission name'),
+    'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
 
