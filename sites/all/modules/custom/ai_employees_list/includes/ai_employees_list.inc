@@ -10,7 +10,7 @@ define('AI_EMPLOYEES_LIST_SECONDS_IN_DAY', '86400');
 /**
  * Function to get employees list with tasks statistics.
  */
-function ai_employees_list_get_list() {
+function ai_employees_list_get_list($fired = NULL) {
   $employees_nodes = node_load_multiple(_ai_employees_list_get_nid_employees_by_user_sections());
 
   $sections_vocabulary = taxonomy_vocabulary_machine_name_load('sections');
@@ -26,18 +26,32 @@ function ai_employees_list_get_list() {
             $done = _ai_employees_list_get_tasks_quantity($employee_node->nid, DC_CHANGER_TASK_STATUS_DONE, $section->tid);
             $in_progress = _ai_employees_list_get_tasks_quantity($employee_node->nid, DC_CHANGER_TASK_STATUS_IN_PROGRESS, $section->tid);
             $spent_time = ai_employees_list_get_spent_time_list($employee_node->nid);
-
-            $employees_list[$employee_node->nid][] = array(
-              'nid' => $employee_node->nid,
-              'name_section' => $section->name,
-              'status' => $employee_node->status,
-              'name' => l(check_plain($employee_node->title), 'node/' . $employee_node->nid, array()),
-              'done' => $done,
-              'in_progress' => $in_progress,
-              'all' => $count_tasks,
-              'percentage' => !empty($count_tasks) ? number_format($done * 100 / $count_tasks) : 0,
-              'spent_time' => $spent_time['time'],
-            );
+            if ($fired && $employee_node->status != 1) {
+              $employees_list[$employee_node->nid][] = array(
+                'nid' => $employee_node->nid,
+                'name_section' => $section->name,
+                'status' => $employee_node->status,
+                'name' => l(check_plain($employee_node->title), 'node/' . $employee_node->nid, array()),
+                'done' => $done,
+                'in_progress' => $in_progress,
+                'all' => $count_tasks,
+                'percentage' => !empty($count_tasks) ? number_format($done * 100 / $count_tasks) : 0,
+                'spent_time' => $spent_time['time'],
+              );
+            }
+            else if(!$fired && $employee_node->status == 1){
+              $employees_list[$employee_node->nid][] = array(
+                'nid' => $employee_node->nid,
+                'name_section' => $section->name,
+                'status' => $employee_node->status,
+                'name' => l(check_plain($employee_node->title), 'node/' . $employee_node->nid, array()),
+                'done' => $done,
+                'in_progress' => $in_progress,
+                'all' => $count_tasks,
+                'percentage' => !empty($count_tasks) ? number_format($done * 100 / $count_tasks) : 0,
+                'spent_time' => $spent_time['time'],
+              );
+            }
           }
         }
       }
@@ -132,7 +146,7 @@ function _ai_employees_list_get_nid_employees_by_user_sections() {
   $query->innerJoin('field_data_field_sections_employees', 'fdfse', 'n.nid = fdfse.entity_id');
   $result = $query->execute()->fetchAll();
 
-  $nid_employees= array();
+  $nid_employees = array();
   foreach ($result as $item) {
     foreach ($user_sections as $user_section) {
       if ($item->field_sections_employees_target_id == $user_section->tid) {
