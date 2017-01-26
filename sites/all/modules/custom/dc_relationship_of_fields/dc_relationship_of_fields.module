@@ -37,6 +37,9 @@ function dc_relationship_of_fields_form_alter(&$form, &$form_state, $form_id) {
   }
 
   if ($form_id == 'assigned_tasks_node_form' && isset($form_state['build_info']['args']['main'])) {
+    $form['field_nid_employee'][LANGUAGE_NONE]['#options'] = _dc_relationship_get_employees_options_by_uid();
+
+    $form['field_nid_employee'][LANGUAGE_NONE]['#default_value'] = NULL;
     $form['field_section_at'][LANGUAGE_NONE]['#default_value'] = NULL;
     $form['field_topic_at'][LANGUAGE_NONE]['#default_value'] = NULL;
     $form['field_nid_task'][LANGUAGE_NONE]['#default_value'] = NULL;
@@ -227,6 +230,25 @@ function _dc_relationship_of_fields_get_tasks_options($tid_topic, $employee_nid)
   if ($tasks) {
     foreach ($tasks as $task) {
       $options[$task->nid] = $task->title;
+    }
+  }
+
+  return $options;
+}
+
+function _dc_relationship_get_employees_options_by_uid() {
+  global $user;
+
+  $query = db_select('node', 'n');
+  $query->fields('n', array('nid', 'title'));
+  $query->condition('n.type', 'employees');
+  $query->condition('n.uid', $user->uid);
+  $employees = $query->execute()->fetchAll();
+
+  $options = array();
+  if ($employees) {
+    foreach ($employees as $employee) {
+      $options[$employee->nid] = $employee->title;
     }
   }
 
