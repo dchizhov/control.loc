@@ -15,6 +15,7 @@ function ai_employees_list_get_list($fired = NULL) {
 
   $sections_vocabulary = taxonomy_vocabulary_machine_name_load('sections');
   $sections = taxonomy_term_load_multiple(NULL, array('vid' => $sections_vocabulary->vid));
+  $statuses = _dc_changer_get_statuses();
 
   $employees_list = array();
   foreach ($employees_nodes as $employee_node) {
@@ -23,8 +24,7 @@ function ai_employees_list_get_list($fired = NULL) {
         foreach ($employee_node->field_sections_employees[LANGUAGE_NONE] as $field_sections_employee) {
           if ($section->tid == $field_sections_employee['target_id']) {
             $count_tasks = _ai_employees_list_get_count_tasks_by_section_id($section->tid);
-            $done = _ai_employees_list_get_tasks_quantity($employee_node->nid, DC_CHANGER_TASK_STATUS_DONE, $section->tid);
-            $in_progress = _ai_employees_list_get_tasks_quantity($employee_node->nid, DC_CHANGER_TASK_STATUS_IN_PROGRESS, $section->tid);
+            $done = _ai_employees_list_get_tasks_quantity($employee_node->nid, $statuses['status_done']->tid, $section->tid);
             $spent_time = ai_employees_list_get_spent_time_list($employee_node->nid);
             if ($fired && $employee_node->status != 1) {
               $employees_list[$employee_node->nid][] = array(
@@ -33,7 +33,8 @@ function ai_employees_list_get_list($fired = NULL) {
                 'status' => $employee_node->status,
                 'name' => l(check_plain($employee_node->title), 'node/' . $employee_node->nid, array()),
                 'done' => $done,
-                'in_progress' => $in_progress,
+                'not_done' => _ai_employees_list_get_tasks_quantity($employee_node->nid,$statuses['status_not_done']->tid,$section->tid),
+                'in_progress' => _ai_employees_list_get_tasks_quantity($employee_node->nid, $statuses['status_in_progress']->tid, $section->tid),
                 'all' => $count_tasks,
                 'percentage' => !empty($count_tasks) ? number_format($done * 100 / $count_tasks) : 0,
                 'spent_time' => $spent_time['time'],
@@ -46,7 +47,8 @@ function ai_employees_list_get_list($fired = NULL) {
                 'status' => $employee_node->status,
                 'name' => l(check_plain($employee_node->title), 'node/' . $employee_node->nid, array()),
                 'done' => $done,
-                'in_progress' => $in_progress,
+                'not_done' => _ai_employees_list_get_tasks_quantity($employee_node->nid,$statuses['status_not_done']->tid,$section->tid),
+                'in_progress' => _ai_employees_list_get_tasks_quantity($employee_node->nid, $statuses['status_in_progress']->tid, $section->tid),
                 'all' => $count_tasks,
                 'percentage' => !empty($count_tasks) ? number_format($done * 100 / $count_tasks) : 0,
                 'spent_time' => $spent_time['time'],
@@ -219,6 +221,7 @@ function ai_employees_list_prepare_list($lists) {
     'Section',
     'In Progress',
     'Done',
+    'Not Done',
     'Total',
     'Employee\'s progress',
     'Total spent time'
@@ -234,6 +237,7 @@ function ai_employees_list_prepare_list($lists) {
               'name_section' => $param['name_section'],
               'in_progress' => check_plain($param['in_progress']),
               'done' => check_plain($param['done']),
+              'not_done' => check_plain($param['not_done']),
               'all' => check_plain($param['all']),
               'cool_progressbar' => theme('cool_progressbar', array('percentage' => check_plain($param['percentage']))),
               'spent_time' => check_plain($param['spent_time']),
@@ -247,6 +251,7 @@ function ai_employees_list_prepare_list($lists) {
               'name_section' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['name_section'] . '</div>' . check_plain($param['name_section']),
               'in_progress' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['in_progress'] . '</div>' . check_plain($param['in_progress']),
               'done' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['done'] . '</div>' . check_plain($param['done']),
+              'not_done' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['not_done'] . '</div>' . check_plain($param['not_done']),
               'all' => '<div style="margin-bottom: 20px;">' . $rows[$param['nid']]['data']['all'] . '</div>' . check_plain($param['all']),
               'cool_progressbar' => $rows[$param['nid']]['data']['cool_progressbar'] . theme('cool_progressbar', array('percentage' => check_plain($param['percentage']))),
               'spent_time' => check_plain($param['spent_time']),
