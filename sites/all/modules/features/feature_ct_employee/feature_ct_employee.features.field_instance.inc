@@ -218,6 +218,46 @@ function feature_ct_employee_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-employees-field_feedback_employee'.
+  $field_instances['node-employees-field_feedback_employee'] = array(
+    'bundle' => 'employees',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 9,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_feedback_employee',
+    'label' => 'Feedback',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 10,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 8,
+    ),
+  );
+
   // Exported field_instance: 'node-employees-field_phone_number'.
   $field_instances['node-employees-field_phone_number'] = array(
     'bundle' => 'employees',
@@ -308,6 +348,7 @@ function feature_ct_employee_field_default_field_instances() {
   t('Date of finish probation');
   t('Date of start probation');
   t('Email');
+  t('Feedback');
   t('Phone number');
   t('Sections');
 
