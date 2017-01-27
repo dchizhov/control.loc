@@ -24,7 +24,12 @@ function dc_mailer_mail($key, &$message, $params) {
       $message['body'][] = t('Topic: ' . $params['topic']);
       $message['body'][] = t('Approximate time: ' . $params['approximate_time']);
       $message['body'][] = t($params['body']);
-      $message['params']['attachments'][] = $params['attached_file'];
+      if (isset($params['file_url'])) {
+        $message['body'][] = t('Link to file: ' . $params['file_url']);
+      }
+
+//      Params for attaching file
+//      $message['params']['attachments'][] = $params['attached_file'];
       break;
   }
 }
@@ -69,13 +74,18 @@ function _dc_mailer_get_params($nid_task) {
     $params['approximate_time'] = $task->field_approximate_time['und'][0]['value'];
   }
 
-  $params['attached_file'] = '';
+//  $params['attached_file'] = '';
+  $params['file_url'] = '';
   if (isset($task->field_file_task[LANGUAGE_NONE][0])) {
-    $params['attached_file'] = array(
-      'filecontent' => file_get_contents($task->field_file_task['und'][0]['uri']),
-      'filename' => $task->field_file_task['und'][0]['filename'],
-      'filemime' => $task->field_file_task['und'][0]['filemime'],
-    );
+    $params['file_url'] = file_create_url($task->field_file_task[LANGUAGE_NONE][0]['uri']);
+
+//    Params for attaching file
+
+//    $params['attached_file'] = array(
+//      'filecontent' => file_get_contents($task->field_file_task['und'][0]['uri']),
+//      'filename' => $task->field_file_task['und'][0]['filename'],
+//      'filemime' => $task->field_file_task['und'][0]['filemime'],
+//    );
   }
 
   $params['title'] = $task->title;

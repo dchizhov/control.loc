@@ -166,6 +166,44 @@ function feature_page_employees_default_page_manager_handlers() {
   $pane->uuid = 'c2140273-d75e-46d6-a3c4-976bb39077aa';
   $display->content['new-c2140273-d75e-46d6-a3c4-976bb39077aa'] = $pane;
   $display->panels['right'][0] = 'new-c2140273-d75e-46d6-a3c4-976bb39077aa';
+  $pane = new stdClass();
+  $pane->pid = 'new-a82e9e2c-3b89-461c-a27a-6161b79da799';
+  $pane->panel = 'top';
+  $pane->type = 'views';
+  $pane->subtype = 'employees';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array(
+    'override_pager_settings' => 0,
+    'use_pager' => 0,
+    'nodes_per_page' => '',
+    'pager_id' => '0',
+    'offset' => '0',
+    'more_link' => 0,
+    'feed_icons' => 0,
+    'panel_args' => 0,
+    'link_to_view' => 0,
+    'args' => '%1',
+    'url' => '',
+    'display' => 'block_1',
+    'context' => array(
+      0 => '',
+    ),
+    'override_title' => 0,
+    'override_title_text' => '',
+    'override_title_heading' => 'h2',
+  );
+  $pane->cache = array();
+  $pane->style = array(
+    'settings' => NULL,
+  );
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 0;
+  $pane->locks = array();
+  $pane->uuid = 'a82e9e2c-3b89-461c-a27a-6161b79da799';
+  $display->content['new-a82e9e2c-3b89-461c-a27a-6161b79da799'] = $pane;
+  $display->panels['top'][0] = 'new-a82e9e2c-3b89-461c-a27a-6161b79da799';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;

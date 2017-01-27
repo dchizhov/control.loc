@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Feature View Employees feature.
+ */
+
+include_once 'feature_view_employees.features.inc';

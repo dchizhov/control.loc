@@ -67,5 +67,11 @@ function ai_employees_list_theme() {
       ),
       'template' => 'templates/cool_progressbar',
     ),
+    'table_cell' => array(
+      'variables' => array(
+        'value' => NULL,
+      ),
+      'template' => 'templates/table_cell',
+    )
   );
 }
