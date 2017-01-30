@@ -464,6 +464,65 @@ function feature_view_all_tasks_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'tasks' => 'tasks',
   );
+
+  /* Display: Attached Files to Tasks */
+  $handler = $view->new_display('page', 'Attached Files to Tasks', 'page_1');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Attached files to Tasks';
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'field_section_task',
+      'rendered' => 1,
+      'rendered_strip' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: File */
+  $handler->display->display_options['fields']['field_file_task']['id'] = 'field_file_task';
+  $handler->display->display_options['fields']['field_file_task']['table'] = 'field_data_field_file_task';
+  $handler->display->display_options['fields']['field_file_task']['field'] = 'field_file_task';
+  $handler->display->display_options['fields']['field_file_task']['label'] = '';
+  $handler->display->display_options['fields']['field_file_task']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_file_task']['click_sort_column'] = 'fid';
+  /* Field: Content: Section */
+  $handler->display->display_options['fields']['field_section_task']['id'] = 'field_section_task';
+  $handler->display->display_options['fields']['field_section_task']['table'] = 'field_data_field_section_task';
+  $handler->display->display_options['fields']['field_section_task']['field'] = 'field_section_task';
+  $handler->display->display_options['fields']['field_section_task']['label'] = '';
+  $handler->display->display_options['fields']['field_section_task']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_section_task']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_section_task']['settings'] = array(
+    'link' => 0,
+  );
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'tasks' => 'tasks',
+  );
+  $handler->display->display_options['path'] = 'content/tasks/files';
   $export['all_tasks'] = $view;
 
   return $export;
