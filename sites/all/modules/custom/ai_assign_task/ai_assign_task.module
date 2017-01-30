@@ -112,7 +112,19 @@ function _ai_assign_task_assign_task($ajax, $type, $nid_employee, $nid_task) {
   $node->field_nid_task['und'][0]['target_id'] = $task->nid;
   $node->field_nid_employee['und'][0]['target_id'] = $employee->nid;
   $node->field_status['und'][0]['tid'] = 2;
-
   node_save($node);
   _dc_mailer_send_email($nid_employee, $nid_task);
+
+  if ($is_ajax) {
+    drupal_add_js(drupal_get_path('module', 'ai_assign_task') . '/ai_assign_task.js');
+
+    $commands = array();
+    $commands[] = array('command' => 'change_status', 'nid_task' => $nid_task);
+
+    return array(
+      '#type' => 'ajax',
+      '#commands' => $commands,
+    );
+  }
+
 }
