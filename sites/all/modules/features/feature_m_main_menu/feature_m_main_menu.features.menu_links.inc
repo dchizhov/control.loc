@@ -52,6 +52,27 @@ function feature_m_main_menu_menu_default_menu_links() {
     'customized' => 1,
     'parent_identifier' => 'main-menu_tasks:all_tasks',
   );
+  // Exported menu link: main-menu_attached-files:content/tasks/files.
+  $menu_links['main-menu_attached-files:content/tasks/files'] = array(
+    'menu_name' => 'main-menu',
+    'link_path' => 'content/tasks/files',
+    'router_path' => 'content/tasks/files',
+    'link_title' => 'Attached Files',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+      'identifier' => 'main-menu_attached-files:content/tasks/files',
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => 39,
+    'customized' => 1,
+    'parent_identifier' => 'main-menu_tasks:all_tasks',
+  );
   // Exported menu link: main-menu_create-task:node/add/tasks.
   $menu_links['main-menu_create-task:node/add/tasks'] = array(
     'menu_name' => 'main-menu',
@@ -156,17 +177,17 @@ function feature_m_main_menu_menu_default_menu_links() {
     'customized' => 1,
     'parent_identifier' => 'main-menu_tasks:all_tasks',
   );
-  // Exported menu link: main-menu_tages:admin/structure/taxonomy/tags.
-  $menu_links['main-menu_tages:admin/structure/taxonomy/tags'] = array(
+  // Exported menu link: main-menu_tags:admin/structure/taxonomy/tags.
+  $menu_links['main-menu_tags:admin/structure/taxonomy/tags'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'admin/structure/taxonomy/tags',
     'router_path' => 'admin/structure/taxonomy/%',
-    'link_title' => 'Tages',
+    'link_title' => 'Tags',
     'options' => array(
       'attributes' => array(
         'title' => '',
       ),
-      'identifier' => 'main-menu_tages:admin/structure/taxonomy/tags',
+      'identifier' => 'main-menu_tags:admin/structure/taxonomy/tags',
     ),
     'module' => 'menu',
     'hidden' => 0,
@@ -234,79 +255,21 @@ function feature_m_main_menu_menu_default_menu_links() {
     'customized' => 0,
     'parent_identifier' => 'management_menus:admin/structure/menu',
   );
-  // Exported menu link: management_menus:admin/structure/menu.
-  $menu_links['management_menus:admin/structure/menu'] = array(
-    'menu_name' => 'management',
-    'link_path' => 'admin/structure/menu',
-    'router_path' => 'admin/structure/menu',
-    'link_title' => 'Menus',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'Add new menus to your site, edit existing menus, and rename and reorganize menu links.',
-      ),
-      'identifier' => 'management_menus:admin/structure/menu',
-    ),
-    'module' => 'system',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 1,
-    'expanded' => 0,
-    'weight' => 0,
-    'customized' => 0,
-    'parent_identifier' => 'management_structure:admin/structure',
-  );
-  // Exported menu link: user-menu_log-out:user/logout.
-  $menu_links['user-menu_log-out:user/logout'] = array(
-    'menu_name' => 'user-menu',
-    'link_path' => 'user/logout',
-    'router_path' => 'user/logout',
-    'link_title' => 'Log out',
-    'options' => array(
-      'identifier' => 'user-menu_log-out:user/logout',
-    ),
-    'module' => 'system',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => 10,
-    'customized' => 0,
-  );
-  // Exported menu link: user-menu_user-account:user.
-  $menu_links['user-menu_user-account:user'] = array(
-    'menu_name' => 'user-menu',
-    'link_path' => 'user',
-    'router_path' => 'user',
-    'link_title' => 'User account',
-    'options' => array(
-      'alter' => TRUE,
-      'identifier' => 'user-menu_user-account:user',
-    ),
-    'module' => 'system',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -10,
-    'customized' => 0,
-  );
 
   // Translatables
   // Included for use with string extractors like potx.
   t('Add employee');
   t('Assign task');
+  t('Attached Files');
   t('Create task');
   t('Employees');
   t('List of employees');
   t('List of tasks');
   t('List of tasks SOLR');
-  t('Log out');
   t('Main menu');
-  t('Menus');
-  t('Tages');
+  t('Tags');
   t('Tasks');
   t('Topics');
-  t('User account');
 
   return $menu_links;
 }
