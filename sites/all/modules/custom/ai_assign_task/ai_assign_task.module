@@ -71,7 +71,7 @@ function ai_assign_task_form_alter(&$form, &$form_state, $form_id) {
         'field_topic_at',
         'field_section_at',
       );
-      __ai_assign_task_set_access_false($form, $hidden_fields);
+      _ai_assign_task_set_access_false($form, $hidden_fields);
     }
 
     // Hide settings for modal window form.
@@ -86,7 +86,7 @@ function ai_assign_task_form_alter(&$form, &$form_state, $form_id) {
  * Second param - fields names
  */
 
-function __ai_assign_task_set_access_false(&$form, array $fields) {
+function _ai_assign_task_set_access_false(&$form, array $fields) {
   foreach ($fields as $field) {
     $form[$field]['#access'] = FALSE;
   }

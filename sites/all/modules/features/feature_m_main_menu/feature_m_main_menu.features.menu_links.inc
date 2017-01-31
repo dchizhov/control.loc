@@ -217,26 +217,6 @@ function feature_m_main_menu_menu_default_menu_links() {
     'weight' => -14,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_topics:admin/structure/taxonomy/task_topic.
-  $menu_links['main-menu_topics:admin/structure/taxonomy/task_topic'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'admin/structure/taxonomy/task_topic',
-    'router_path' => 'admin/structure/taxonomy/%',
-    'link_title' => 'Topics',
-    'options' => array(
-      'attributes' => array(
-        'title' => '',
-      ),
-      'identifier' => 'main-menu_topics:admin/structure/taxonomy/task_topic',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => 8,
-    'customized' => 1,
-  );
   // Exported menu link: management_main-menu:admin/structure/menu/manage/main-menu.
   $menu_links['management_main-menu:admin/structure/menu/manage/main-menu'] = array(
     'menu_name' => 'management',
@@ -269,7 +249,6 @@ function feature_m_main_menu_menu_default_menu_links() {
   t('Main menu');
   t('Tags');
   t('Tasks');
-  t('Topics');
 
   return $menu_links;
 }
