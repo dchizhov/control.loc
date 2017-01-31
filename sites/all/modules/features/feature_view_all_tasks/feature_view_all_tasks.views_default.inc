@@ -173,6 +173,16 @@ function feature_view_all_tasks_views_default_views() {
   $handler->display->display_options['fields']['nothing']['alter']['text'] = '<a href="/all_tasks/nojs/[nid_1]" class="ctools-use-modal ctools-modal-assign-popup-style use-ajax">assign</a>';
   $handler->display->display_options['fields']['nothing']['alter']['path'] = '/all_tasks/nojs?nid=[node:nid]';
   $handler->display->display_options['fields']['nothing']['element_wrapper_class'] = 'ctools-use-modal';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Author uid */
+  $handler->display->display_options['arguments']['uid']['id'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['table'] = 'node';
+  $handler->display->display_options['arguments']['uid']['field'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['uid']['default_argument_type'] = 'current_user';
+  $handler->display->display_options['arguments']['uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */
@@ -339,7 +349,7 @@ function feature_view_all_tasks_views_default_views() {
       'empty_column' => 0,
     ),
     'field_task_topic' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -437,7 +447,6 @@ function feature_view_all_tasks_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  $handler->display->display_options['sorts']['created']['expose']['label'] = 'Post date';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Author uid */
   $handler->display->display_options['arguments']['uid']['id'] = 'uid';
