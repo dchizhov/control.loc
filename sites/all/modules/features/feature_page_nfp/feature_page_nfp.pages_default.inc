@@ -198,7 +198,7 @@ function feature_page_nfp_default_page_manager_pages() {
   $pane->uuid = '3e880abd-28b5-46c0-bc3e-904a75aaf1d1';
   $display->content['new-3e880abd-28b5-46c0-bc3e-904a75aaf1d1'] = $pane;
   $display->panels['middle'][4] = 'new-3e880abd-28b5-46c0-bc3e-904a75aaf1d1';
-  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;

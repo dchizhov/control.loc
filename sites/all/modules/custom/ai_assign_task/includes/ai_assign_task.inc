@@ -85,6 +85,7 @@ function ai_assign_task_employees_list_callback($form, $form_state) {
  * Function returns a list of employees that didn't do selected task before.
  */
 function ai_assign_task_get_employees($task_id) {
+  global $user;
   $options = array();
 
   $query = db_select('field_data_field_nid_employee', 'ne');
@@ -97,6 +98,7 @@ function ai_assign_task_get_employees($task_id) {
   $query = db_select('node', 'n');
   $query->fields('n', array('nid', 'title'));
   $query->condition('type', 'employees');
+  $query->condition('n.uid',$user->uid);
 
   if ($employees_nids) {
     $nids = array();

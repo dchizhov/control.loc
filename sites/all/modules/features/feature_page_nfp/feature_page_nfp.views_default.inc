@@ -25,7 +25,11 @@ function feature_page_nfp_views_default_views() {
   $handler->display->display_options['title'] = 'Doc file';
   $handler->display->display_options['hide_admin_links'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    3 => '3',
+    2 => '2',
+  );
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
@@ -57,6 +61,15 @@ function feature_page_nfp_views_default_views() {
   $handler->display->display_options['fields']['view']['view'] = 'tasks_list';
   $handler->display->display_options['fields']['view']['display'] = 'page';
   $handler->display->display_options['fields']['view']['arguments'] = '[%tid]';
+  /* Contextual filter: Taxonomy term: author_topic (field_author_topic) */
+  $handler->display->display_options['arguments']['field_author_topic_target_id']['id'] = 'field_author_topic_target_id';
+  $handler->display->display_options['arguments']['field_author_topic_target_id']['table'] = 'field_data_field_author_topic';
+  $handler->display->display_options['arguments']['field_author_topic_target_id']['field'] = 'field_author_topic_target_id';
+  $handler->display->display_options['arguments']['field_author_topic_target_id']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_author_topic_target_id']['default_argument_type'] = 'current_user';
+  $handler->display->display_options['arguments']['field_author_topic_target_id']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_author_topic_target_id']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_author_topic_target_id']['summary_options']['items_per_page'] = '25';
   /* Filter criterion: Taxonomy vocabulary: Machine name */
   $handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
   $handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';

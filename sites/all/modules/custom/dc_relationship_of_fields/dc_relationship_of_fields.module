@@ -309,6 +309,23 @@ function _dc_relationship_get_sections_options_by_uid() {
   return $options;
 }
 
+function _dc_relationship_get_tasks_options_by_uid() {
+  global $user;
+
+  $query = db_select('node','n');
+  $query->fields('n',array('nid','title'));
+  $query->condition('type','tasks');
+  $query->condition('uid', $user->uid);
+  $result = $query->execute()->fetchAll();
+  
+  $options = array();
+  foreach ($result as $item) {
+    $options[$item->nid] = $item->title;
+  }
+  
+  return $options;
+}
+
 /**
  * Return field_task_topic
  */
