@@ -1,7 +1,7 @@
 name = Feature View Employees
 core = 7.x
 package = Features View
-version = 7.x-1.00
+version = 7.x-1.01
 dependencies[] = views
 features[ctools][] = views:views_default:3.0
 features[features_api][] = api:2
