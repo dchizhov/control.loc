@@ -29,6 +29,8 @@ function ai_employees_list_get_list($fired = NULL) {
           if ($section->tid == $field_sections_employee['target_id']) {
             $count_tasks = _ai_employees_list_get_count_tasks_by_section_id($section->tid);
             $done = _ai_employees_list_get_tasks_quantity($employee_node->nid, $statuses['status_done']->tid, $section->tid);
+            $not_done = _ai_employees_list_get_tasks_quantity($employee_node->nid, $statuses['status_not_done']->tid, $section->tid);
+
             $spent_time = ai_employees_list_get_spent_time_list($employee_node->nid);
             if ($fired && $employee_node->status != 1) {
               $employees_list[$employee_node->nid][] = array(
@@ -38,10 +40,11 @@ function ai_employees_list_get_list($fired = NULL) {
                 'status' => $employee_node->status,
                 'name' => l(check_plain($employee_node->title), 'node/' . $employee_node->nid, array()),
                 'done' => $done,
-                'not_done' => _ai_employees_list_get_tasks_quantity($employee_node->nid, $statuses['status_not_done']->tid, $section->tid),
+                'not_done' => $not_done,
                 'in_progress' => _ai_employees_list_get_tasks_quantity($employee_node->nid, $statuses['status_in_progress']->tid, $section->tid),
                 'all' => $count_tasks,
                 'percentage' => !empty($count_tasks) ? number_format($done * 100 / $count_tasks) : 0,
+                'percentage_not_done' => !empty($count_tasks) ? number_format($not_done * 100 / $count_tasks) : 0,
                 'spent_time' => $spent_time['time'],
               );
             }
@@ -53,10 +56,11 @@ function ai_employees_list_get_list($fired = NULL) {
                 'status' => $employee_node->status,
                 'name' => l(check_plain($employee_node->title), 'node/' . $employee_node->nid, array()),
                 'done' => $done,
-                'not_done' => _ai_employees_list_get_tasks_quantity($employee_node->nid, $statuses['status_not_done']->tid, $section->tid),
+                'not_done' => $not_done,
                 'in_progress' => _ai_employees_list_get_tasks_quantity($employee_node->nid, $statuses['status_in_progress']->tid, $section->tid),
                 'all' => $count_tasks,
                 'percentage' => !empty($count_tasks) ? number_format($done * 100 / $count_tasks) : 0,
+                'percentage_not_done' => !empty($count_tasks) ? number_format($not_done * 100 / $count_tasks) : 0,
                 'spent_time' => $spent_time['time'],
               );
             }
@@ -250,7 +254,10 @@ function ai_employees_list_prepare_list($lists) {
             'done' => check_plain($param['done']),
             'not_done' => check_plain($param['not_done']),
             'all' => check_plain($param['all']),
-            'cool_progressbar' => theme('cool_progressbar', array('percentage' => check_plain($param['percentage']))),
+            'cool_progressbar' => theme('cool_progressbar', array(
+              'percentage' => check_plain($param['percentage']),
+              'percentage_not_done' => check_plain($param['percentage_not_done'])
+            )),
             'spent_time' => check_plain($param['spent_time']),
           ),
         );
@@ -261,7 +268,10 @@ function ai_employees_list_prepare_list($lists) {
         $rows[$param['nid']]['data']['done'] .= theme('table_cell', array('value' => check_plain($param['done'])));
         $rows[$param['nid']]['data']['not_done'] .= theme('table_cell', array('value' => check_plain($param['not_done'])));
         $rows[$param['nid']]['data']['all'] .= theme('table_cell', array('value' => check_plain($param['all'])));
-        $rows[$param['nid']]['data']['cool_progressbar'] .= theme('cool_progressbar', array('percentage' => check_plain($param['percentage'])));
+        $rows[$param['nid']]['data']['cool_progressbar'] .= theme('cool_progressbar', array(
+          'percentage' => check_plain($param['percentage']),
+          'percentage_not_done' => check_plain($param['percentage_not_done'])
+        ));
       }
     }
   }
@@ -296,7 +306,10 @@ function ai_employees_list_prepare_list_who_leave($lists) {
             'name_section' => $param['name_section'] . $section_logo,
             'done' => check_plain($param['done']),
             'all' => check_plain($param['all']),
-            'cool_progressbar' => theme('cool_progressbar', array('percentage' => check_plain($param['percentage']))),
+            'cool_progressbar' => theme('cool_progressbar', array(
+              'percentage' => check_plain($param['percentage']),
+              'percentage_not_done' => check_plain($param['percentage_not_done'])
+            )),
             'spent_time' => check_plain($param['spent_time']),
           ),
         );
@@ -305,7 +318,10 @@ function ai_employees_list_prepare_list_who_leave($lists) {
         $rows[$param['nid']]['data']['name_section'] .= theme('table_cell', array('value' => check_plain($param['name_section']) . $section_logo));
         $rows[$param['nid']]['data']['done'] .= theme('table_cell', array('value' => check_plain($param['done'])));
         $rows[$param['nid']]['data']['all'] .= theme('table_cell', array('value' => check_plain($param['all'])));
-        $rows[$param['nid']]['data']['cool_progressbar'] .= theme('cool_progressbar', array('percentage' => check_plain($param['percentage'])));
+        $rows[$param['nid']]['data']['cool_progressbar'] .= theme('cool_progressbar', array(
+          'percentage' => check_plain($param['percentage']),
+          'percentage_not_done' => check_plain($param['percentage_not_done'])
+        ));
       }
     }
   }

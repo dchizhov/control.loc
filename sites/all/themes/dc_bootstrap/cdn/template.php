@@ -49,6 +49,8 @@ function dc_bootstrap_preprocess_views_view_table(&$vars) {
 }
 
 function _dc_bootstrap_get_assigned_tasks_by_employee() {
+  $nid_employee = arg(1);
+
   $query = db_select('node', 'n');
   $query->fields('fdfnt', array('field_nid_task_target_id'));
   $query->fields('fdfs', array('field_status_tid'));
@@ -56,7 +58,7 @@ function _dc_bootstrap_get_assigned_tasks_by_employee() {
   $query->innerJoin('field_data_field_nid_task', 'fdfnt', 'n.nid = fdfnt.entity_id');
   $query->innerJoin('field_data_field_status', 'fdfs', 'n.nid = fdfs.entity_id');
   $query->condition('type', 'assigned_tasks');
-  $query->condition('fdfne.field_nid_employee_target_id', arg(1));
+  $query->condition('fdfne.field_nid_employee_target_id', $nid_employee);
   $tasks = $query->execute()->fetchAll();
 
   return $tasks;

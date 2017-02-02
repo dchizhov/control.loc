@@ -64,6 +64,7 @@ function ai_employees_list_theme() {
     'cool_progressbar' => array(
       'variables' => array(
         'percentage' => NULL,
+        'percentage_not_done' => NULL,
       ),
       'template' => 'templates/cool_progressbar',
     ),
